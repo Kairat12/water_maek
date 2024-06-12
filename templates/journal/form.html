@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+
+<script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/moment-with-locales.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap-datetimepicker.min.js' %}"></script>
+
+<link href="{% static 'journal/vendor/bootstrap/css3/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+{% endblock extra_css%}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class='col-md-6'>
+		<form method="post" id="createform" autocomplete="off">
+		{% csrf_token %}
+
+    	{% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+          	{{ hidden_field }}
+       	{% endfor %}
+
+    	{% if form.non_field_errors %}
+      		<div class="alert alert-danger" role="alert">
+        		{% for error in form.non_field_errors %}
+          			{{ error }}
+        		{% endfor %}
+      		</div>
+    	{% endif %}
+    	{% for field in form.visible_fields %}
+        <div class="form-group">
+
+        	{{ field.label_tag }}
+            {% render_field field class="form-control" %}
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" id="sButton" class="btn btn-primary form-btn-margin">Отправить</button>
+		</form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+        	locale: 'ru',
+            sideBySide: true,
+            useCurrent: false,
+            minDate: moment().millisecond(0).second(0).minute(0).hour(0),
+            daysOfWeekDisabled: [0, 6],
+            enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        });
+        $('#datetimepicker2').datetimepicker({
+        	locale: 'ru',
+            sideBySide: true,
+            useCurrent: false,
+            minDate: moment().millisecond(0).second(0).minute(0).hour(0),
+            daysOfWeekDisabled: [0, 6],
+            enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        });
+
+        $("#datetimepicker1").on("dp.change", function (e) {
+            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker2").on("dp.change", function (e) {
+            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#createform').submit(function() {
+        $("#sButton").prop('disabled', true);
+        return true;
+    });
+});
+</script>
+{% endblock extra_js%}

@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Качество исходной воды для подпитки теплосети ТЭЦ-1{% endblock title %}</title>
+    <div class="container table-margin">
+        <h3 class="h3 mt-4 mb-2">Качество исходной воды для подпитки теплосети ТЭЦ-1</h3>
+        <h4 class="h4">{{ source_water_qualities.date_added|date:"d.m.Y" }}</h4>
+        <div class="mt-5 mb-5">
+            <div>
+                <div class="row">
+                    {% for makeup_water_quality in makeup_water_qualities.makeupwaterqualitystation_set.all %}
+                        {% if forloop.first %}
+                            <div class="border pt-1 pb-1 text-center">
+                                <b>{{ makeup_water_quality.station }}</b>
+                            </div>
+
+                            <div class="col border p-1 fw-bold">Место отбора</div>
+                            {% for fact_attributefact in makeup_water_quality.fact.factattributefact_set.all|dictsort:"id" %}
+                                <div class="col border p-1 fw-bold">{{ fact_attributefact.attribute.name }}</div>
+                            {% endfor %}
+                            {% if makeup_water_quality.station in request.user.profile.stations.all or request.user.is_superuser %}
+                                <div class="col border p-1 fw-bold">Действие</div>
+                            {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="row fact_normal" id="fact_normal">
+                            <div class="border p-1 col"><b>нормы</b></div>
+                            <div class="border p-1 col normal_value" data-value="8.3-8.9"><b>8,3-8,9</b></div>
+                            <div class="border p-1 col normal_value" data-value="800"><b>≤ 800</b></div>
+                            <div class="border p-1 col normal_value" data-value="300"><b>≤ 300</b></div>
+                            <div class="border p-1 col normal_value" data-value="300"><b>≤ 300</b></div>
+                            <div class="border p-1 col normal_value" data-value="1.5"><b>≤ 1,5</b></div>
+                            <div class="border p-1 col normal_value" data-value="20"><b>≤ 20</b></div>
+                            <div class="border p-1 col normal_value" data-value="0.1"><b>≤ 0,1</b></div>
+                            <div class="border p-1 col normal_value" data-value="50"><b>≤ 50</b></div>
+
+                            {% if request.user.profile.station.id == makeup_water_quality.station.id or request.user.is_superuser %}
+                                <div class="border p-1 col fw-bold"></div>
+                            {% endif %}
+                        </div>
+                        <div class="row fact_attributes" data-fact="{{ makeup_water_quality.fact.id }}">
+                            <div class="border p-1 col"><b>факт</b> {{ makeup_water_quality.fact.name }}
+                            </div>
+                            {% for fact_attributefact in makeup_water_quality.fact.factattributefact_set.all|dictsort:"id" %}
+                                {% if fact_attributefact.not_count is True %}
+                                    <div class="border p-1 col attribute">не измеряется</div>
+                                {% else %}
+                                    <div class="border p-1 col attribute " data-attribute="{{ fact_attributefact.id }}">
+                                        <span class="non-edit">{{ fact_attributefact.value }}</span>
+                                        <input type="number" style="display: none" step="0.1" class="editable w-100"
+                                               value="{{ fact_attributefact.value|stringformat:".1f" }}"/>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if makeup_water_quality.station in request.user.profile.stations.all or request.user.is_superuser %}
+                                <div class="border p-1 col fw-bold">
+                                    <div class="buttons">
+                                        <a href="javascript:" id="edit-btn"
+                                           class="nav-link edit-btn  edit-{{ makeup_water_quality.fact.id }}">Изменить</a>
+                                        <a href="javascript:" id="save-btn" style="display: none"
+                                           class="save-btn nav-link save-{{ makeup_water_quality.fact.id }}">Сохранить</a>
+                                        <a href="javascript:" id="cancel-btn" style="display: none"
+                                           class="cancel-btn nav-link cancel-{{ makeup_water_quality.fact.id }}">Отменить</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+            </div>
+
+            {#     THIS IS BLOCK VARIANT       #}
+        </div>
+        <div class="modal fade " id="succesModal" tabindex="-1" role="dialog" aria-labelledby="succesModal"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h5 class="h5">Ваши данные успешно сохранены !</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="succesModalClose" data-dismiss="modal">Закрыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script>
+        let editBtns = document.querySelectorAll(".edit-btn");
+        let saveBtns = document.querySelectorAll(".save-btn");
+        let cancelBtns = document.querySelectorAll(".cancel-btn");
+
+        editBtns.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                let target = e.target;
+                let factAttributes = target.closest(".fact_attributes");
+                let btns = target.closest(".buttons");
+                let saveBtn = btns.querySelector(".save-btn");
+                let cancelBtn = btns.querySelector(".cancel-btn");
+                target.style.display = "none";
+                saveBtn.style.display = "block";
+                cancelBtn.style.display = "block";
+                let attributes = factAttributes.querySelectorAll(".attribute");
+                attributes.forEach((el) => {
+                    let nonEdit = el.querySelector(".non-edit");
+                    let editAble = el.querySelector(".editable");
+                    nonEdit.style.display = "none";
+                    editAble.style.display = "block";
+                })
+            })
+        })
+        cancelBtns.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                let target = e.target;
+                let btns = target.closest(".buttons")
+                let editBtn = btns.querySelector(".edit-btn");
+                let saveBtn = btns.querySelector(".save-btn");
+                let factAttributes = target.closest(".fact_attributes");
+                target.style.display = "none";
+                saveBtn.style.display = "none";
+                editBtn.style.display = "block";
+                let attributes = factAttributes.querySelectorAll(".attribute");
+                attributes.forEach((el) => {
+                    let nonEdit = el.querySelector(".non-edit");
+                    let editAble = el.querySelector(".editable");
+                    editAble.style.display = "none";
+                    nonEdit.style.display = "block";
+
+                })
+            })
+        })
+        saveBtns.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                let target = e.target;
+                let btns = target.closest(".buttons");
+                let editBtn = btns.querySelector(".edit-btn");
+                let saveBtn = btns.querySelector(".save-btn");
+                let cancelBtn = btns.querySelector(".cancel-btn");
+                let factAttributes = target.closest(".fact_attributes");
+                let factAttributes_id = factAttributes.dataset.fact;
+                let attributes = factAttributes.querySelectorAll(".attribute");
+                let data = {}
+                attributes.forEach((el) => {
+                    let id = el.dataset.attribute;
+                    data[id] = el.querySelector(".editable").value;
+                })
+
+                fetch('{% url "water_tables:edit_fact" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  // Добавьте CSRF-токен
+                    },
+                    body: JSON.stringify({
+                        factAttributesId: factAttributes_id,
+                        data: data,
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        $('#succesModal').modal('show');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+        })
+
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
+        $("#succesModalClose").on("click", function () {
+            $("#succesModal").modal("hide");
+            location.reload();
+        });
+        
+    </script>
+{% endblock content %}

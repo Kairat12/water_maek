@@ -1,0 +1,162 @@
+{% include 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        .chart_block{
+            padding: 0 40px;
+        }
+        .chart_block canvas{
+            height: 600px;
+            width: 100%;
+            padding: 20px;
+        }
+    </style>
+    <div class="container">
+        <div class="d-flex">
+            <div class="col chart_block">
+                <canvas id="chart1" height="700"></canvas>
+            </div>
+            <div class="col chart_block">
+                <canvas id="chart2" height="700"></canvas>
+            </div>
+            <div class="col chart_block">
+                <canvas id="chart3" height="700"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.0"></script>
+    <script>
+        // Плагин для закругления верхушек столбиков
+        const roundedBarsPlugin = {
+            id: 'roundedBars',
+            beforeDraw: chart => {
+                const {ctx} = chart;
+                ctx.save();
+                chart.getDatasetMeta(0).data.forEach((bar, index) => {
+                    const radius = 20;
+                    const {x, y, width, height} = bar;
+                    ctx.beginPath();
+                    ctx.moveTo(x - width / 2, y);
+                    ctx.lineTo(x - width / 2, y + height - radius);
+                    ctx.quadraticCurveTo(x - width / 2, y + height, x - width / 2 + radius, y + height);
+                    ctx.lineTo(x + width / 2 - radius, y + height);
+                    ctx.quadraticCurveTo(x + width / 2, y + height, x + width / 2, y + height - radius);
+                    ctx.lineTo(x + width / 2, y);
+                    ctx.fillStyle = bar.options.backgroundColor;
+                    ctx.fill();
+                    ctx.stroke();
+                });
+                ctx.restore();
+            }
+        };
+
+        Chart.register(roundedBarsPlugin);
+
+        const createChart = (ctx, label, data, criticalLevel, consumption, pressure) => {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [label],
+                    datasets: [{
+                        label: 'Уровень воды (м)',
+                        data: [data],
+                        backgroundColor: data < criticalLevel ? 'rgba(255, 99, 132, 0.5)' : 'rgba(54, 162, 235, 0.5)',
+                        borderWidth: 1,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            barPercentage: 0.5,
+                            ticks: {
+                                font: {
+                                    size: 18,
+                                },
+                                callback: function (value, index, values) {
+                                    return ['Уровень воды ' + data + ' м', 'Объем воды 8400', 'Расход '+ consumption,'Давление '+ pressure]; // Метки внизу цистерн
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                callback: function (value, index, values) {
+                                    return value + ' м'; // Метки по высоте
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                         title: {
+                            display: true,
+                            text: label + '\nV-20 000 м³',
+                            font: {
+                                size: 16
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            }
+                        },
+                        annotation: {
+                            annotations: [
+                                {
+                                    type: 'line',
+                                    scaleID: 'y',
+                                    value: criticalLevel, // Критический уровень
+                                    borderColor: 'red',
+                                    borderWidth: 2,
+                                    label: {
+                                        content: `Критический уровень ${criticalLevel} м`,
+                                        enabled: true,
+                                        position: 'center'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            });
+        }
+
+        const ctx1 = document.getElementById('chart1').getContext('2d');
+        const ctx2 = document.getElementById('chart2').getContext('2d');
+        const ctx3 = document.getElementById('chart3').getContext('2d');
+        let rpv5_value, rpv5_consumption, rpv5_pressure;
+        {% if rpv5.value is None %}
+            rpv5_value = null; // Присваиваем null, если значение None
+        {% else %}
+            rpv5_value = parseFloat('{{ rpv5.value }}');
+            rpv5_consumption = parseFloat('{{ rpv5.consumption }}');
+            rpv5_pressure = parseFloat('{{ rpv5.pressure }}');
+        {% endif %}
+        let rpv6_value, rpv6_consumption,rpv6_pressure;
+        {% if rpv6.value is None %}
+            rpv6_value = null; // Присваиваем null, если значение None
+        {% else %}
+            rpv6_value = parseFloat('{{ rpv6.value }}');
+            rpv6_consumption = parseFloat('{{ rpv6.consumption }}');
+            rpv6_pressure = parseFloat('{{ rpv6.pressure }}');
+        {% endif %}
+        let rpv7_value, rpv7_consumption,rpv7_pressure;
+        {% if rpv7.value is None %}
+            rpv7_value = null; // Присваиваем null, если значение None
+        {% else %}
+            rpv7_value = parseFloat('{{ rpv7.value }}');
+            rpv7_consumption = parseFloat('{{ rpv7.consumption }}');
+            rpv7_pressure = parseFloat('{{ rpv7.pressure }}');
+        {% endif %}
+        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, rpv5_consumption,rpv5_pressure);
+        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, rpv6_consumption,rpv6_pressure);
+        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, rpv7_consumption,rpv7_pressure);
+    </script>
+{% endblock %}

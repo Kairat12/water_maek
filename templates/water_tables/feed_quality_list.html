@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Качество питательной воды (ПВ) ТЭЦ-1, ТЭЦ-2, ТЭС{% endblock title%}</title>
+    <div class="container table-margin">
+        <h3 class="h3 mt-4 mb-2">Качество питательной воды (ПВ) ТЭЦ-1, ТЭЦ-2, ТЭС</h3>
+        <h4 class="h4">{{ feed_qualities.date_added|date:"d.m.Y" }}</h4>
+        <div class="mt-5 mb-5">
+            <div>
+                <div class="d-flex">
+                    {% for feed_quality_station in feed_qualities.feedqualitystation_set.all %}
+                        {% if forloop.first %}
+                            <div class="border p-1 w-8 fw-bold">Место отбора</div>
+                            {% for fact_attributefact in feed_quality_station.fact.factattributefact_set.all|dictsort:"id" %}
+                                <div class="border p-1 w-8 fw-bold">{{ fact_attributefact.attribute.name }}</div>
+                            {% endfor %}
+                            {% if feed_quality_station.station in request.user.profile.stations.all or request.user.is_superuser %}
+                                <div class="border p-1 w-8 fw-bold">Действие</div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% for feed_quality_station in feed_qualities.feedqualitystation_set.all %}
+                    <div class="border pt-1 pb-1 text-center" style="width: calc(100% - 1px)">
+                        <b>{{ feed_quality_station.station }}</b></div>
+                    <div class="d-flex fact_normal" id="fact_normal">
+                        <div class="border p-1 w-8"><b>нормы</b></div>
+                        {% if feed_quality_station.fact.name in vek_names %}
+                            <div class="border p-1 w-8 normal_value" data-value="9.1-0.1"><b>9,1±0,1</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="3"><b>≤ 3</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="10"><b>≤ 10</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1000"><b>≤ 1000</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="20-60"><b>20-60</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1.5"><b>≤ 1,5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="30"><b>≤ 30 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="5"><b>≤ 5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="0.3"><b>≤ 0.3 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="40"><b>≤ 40 </b></div>
+                        {% elif feed_quality_station.fact.name == 'ПВ 1 очередь' %}
+                            <div class="border p-1 w-8 normal_value" data-value="9.1"><b>9,1±0,1</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="3"><b>≤ 3</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="10"><b>≤ 10</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1000"><b>≤ 1000</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="20-60"><b>20-60</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1.5"><b>≤ 1,5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="30"><b>≤ 30 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="5"><b>≤ 5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="0.3"><b>≤ 0.3 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="80"><b>≤ 80 </b></div>
+                        {% elif feed_quality_station.fact.name == 'ПВ 2 очередь' %}
+                            <div class="border p-1 w-8 normal_value" data-value="9.1"><b>9,1±0,1</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="3"><b>≤ 3</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="10"><b>≤ 10</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1000"><b>≤ 1000</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="20-60"><b>20-60</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1.5"><b>≤ 1,5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="30"><b>≤ 30 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="5"><b>≤ 5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="0.3"><b>≤ 0.3 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="60"><b>≤ 60 </b></div>
+                        {% elif feed_quality_station.fact.name in block_names %}
+                            <div class="border p-1 w-8 normal_value" data-value="9.1"><b>9,1±0,1</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="3"><b>≤ 3</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="10"><b>≤ 10</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1000"><b>≤ 1000</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="20-60"><b>20-60</b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="1.5"><b>≤ 1,5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="30"><b>≤ 30 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="5"><b>≤ 5 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="0.3"><b>≤ 0.3 </b></div>
+                            <div class="border p-1 w-8 normal_value" data-value="40"><b>≤ 30 </b></div>
+                        {% endif %}
+                        {% if feed_quality_station.station in request.user.profile.stations.all or request.user.is_superuser %}
+                            <div class="border p-1 w-8 fw-bold"></div>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex fact_attributes" data-fact="{{ feed_quality_station.fact.id }}">
+                        <div class="border p-1 w-8"><b>факт</b> {{ feed_quality_station.fact.name }}</div>
+                        {% for fact_attributefact in feed_quality_station.fact.factattributefact_set.all|dictsort:"id" %}
+                            {% if fact_attributefact.not_count is True %}
+                                <div class="border p-1 w-8 attribute">не измеряется</div>
+                            {% else %}
+                                <div class="border p-1 w-8 attribute " data-attribute="{{ fact_attributefact.id }}">
+                                    <span class="non-edit">{{ fact_attributefact.value }}</span>
+                                    <input type="number" style="display: none" step="0.1" class="editable w-100"
+                                           value="{{ fact_attributefact.value|stringformat:".1f" }}"/>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if feed_quality_station.station in request.user.profile.stations.all or request.user.is_superuser %}
+                            <div class="border p-1 w-8 fw-bold">
+                                <div class="buttons">
+                                    <a href="javascript:" id="edit-btn"
+                                       class="nav-link edit-btn  edit-{{ feed_quality_station.fact.id }}">Изменить</a>
+                                    <a href="javascript:" id="save-btn" style="display: none"
+                                       class="save-btn nav-link save-{{ feed_quality_station.fact.id }}">Сохранить</a>
+                                    <a href="javascript:" id="cancel-btn" style="display: none"
+                                       class="cancel-btn nav-link cancel-{{ feed_quality_station.fact.id }}">Отменить</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {#     THIS IS BLOCK VARIANT       #}
+    </div>
+    <div class="modal fade " id="succesModal" tabindex="-1" role="dialog" aria-labelledby="succesModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="h5">Ваши данные успешно сохранены !</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="succesModalClose" data-dismiss="modal">Закрыть
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script>
+        let editBtns = document.querySelectorAll(".edit-btn");
+        let saveBtns = document.querySelectorAll(".save-btn");
+        let cancelBtns = document.querySelectorAll(".cancel-btn");
+
+        editBtns.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                let target = e.target;
+                let factAttributes = target.closest(".fact_attributes");
+                let btns = target.closest(".buttons");
+                let saveBtn = btns.querySelector(".save-btn");
+                let cancelBtn = btns.querySelector(".cancel-btn");
+                target.style.display = "none";
+                saveBtn.style.display = "block";
+                cancelBtn.style.display = "block";
+                let attributes = factAttributes.querySelectorAll(".attribute");
+                attributes.forEach((el) => {
+                    let nonEdit = el.querySelector(".non-edit");
+                    let editAble = el.querySelector(".editable");
+                    nonEdit.style.display = "none";
+                    editAble.style.display = "block";
+                })
+            })
+        })
+        cancelBtns.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                let target = e.target;
+                let btns = target.closest(".buttons")
+                let editBtn = btns.querySelector(".edit-btn");
+                let saveBtn = btns.querySelector(".save-btn");
+                let factAttributes = target.closest(".fact_attributes");
+                target.style.display = "none";
+                saveBtn.style.display = "none";
+                editBtn.style.display = "block";
+                let attributes = factAttributes.querySelectorAll(".attribute");
+                attributes.forEach((el) => {
+                    let nonEdit = el.querySelector(".non-edit");
+                    let editAble = el.querySelector(".editable");
+                    editAble.style.display = "none";
+                    nonEdit.style.display = "block";
+
+                })
+            })
+        })
+        saveBtns.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                let target = e.target;
+                let btns = target.closest(".buttons");
+                let editBtn = btns.querySelector(".edit-btn");
+                let saveBtn = btns.querySelector(".save-btn");
+                let cancelBtn = btns.querySelector(".cancel-btn");
+                let factAttributes = target.closest(".fact_attributes");
+                let factAttributes_id = factAttributes.dataset.fact;
+                let attributes = factAttributes.querySelectorAll(".attribute");
+                let data = {}
+                attributes.forEach((el) => {
+                    let id = el.dataset.attribute;
+                    data[id] = el.querySelector(".editable").value;
+                })
+
+                fetch('{% url "water_tables:edit_fact" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  // Добавьте CSRF-токен
+                    },
+                    body: JSON.stringify({
+                        factAttributesId: factAttributes_id,
+                        data: data,
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        $('#succesModal').modal('show');
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
+        })
+
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
+        $("#succesModalClose").on("click", function () {
+            $("#succesModal").modal("hide");
+            location.reload();
+        });
+        
+
+    </script>
+{% endblock content %}

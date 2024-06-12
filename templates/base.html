@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+    <meta charset="utf-8">
+
+    <title>{% block title %}Качество воды{% endblock title%}</title>
+    <link href="{% static 'journal/img/favicon.ico' %}" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'journal/vendor/bootstrap/css3/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'journal/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'journal/css/outwork_style.css' %}?v=1.22" rel="stylesheet" type="text/css">
+    {% block extra_css %}{% endblock extra_css%}
+
+    </head>
+
+    <body>
+{#    <div id="wrapper">#}
+    {% include 'layouts/nav.html' %}
+
+    <div id="body">
+    {% block content %}{% endblock content%}
+    </div> <!--body-->
+
+{#    </div>#}
+    {% block extra_js %}
+        <script src="{% static 'journal/js/main.js' %}"></script>
+        <script src="{% static 'journal/vendor/bootstrap/js3/bootstrap.min.js' %}"></script>
+    {% endblock extra_js%}
+
+    </body>
+</html>

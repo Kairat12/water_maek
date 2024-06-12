@@ -1,0 +1,364 @@
+    	<h1 href="{% %}"> Base index </h1>
+        {% if request.user.is_anonymous %}
+    	<a href="{% url 'profiles:login' %}"> Login </a>
+    	{% endif %}
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'profiles:logout' %}"> Logout </a>
+        {% endif %}
+
+    {% for senders in obj.senders.all %}
+      <span> {{ senders.sender.profile.get_full_name }} </span><br>
+    {% endfor %}
+https://mothereff.in/utf-8
+
+from django.contrib.auth.models import User
+from profiles.models import Profile
+
+ak = User.objects.get(username="akardzhaubaev")
+
+cd /var/www/maek_journal
+source myenv/bin/activate
+
+update public.profiles_profile
+set user_id=7
+where timesheet_number='08814';
+
+insert into public.profiles_profile ("lastName", "givenName", "patronymicName", timesheet_number, company, department, "position", one_c_guid, one_c_login, is_active, user_id)
+values ('Ivanov', 'Ivan', 'Ivanovich', '99999', '', '', '', '1c', '1clogin', 0, 2);
+
+
+      // $("#div-filter").slideToggle('500');
+
+
+
+<!-- Icons Grid -->
+<section class="bg-ideas bg-light text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-2">
+        <h2 class="mtp-5 mbm-6">Все записи</h2>
+      </div>
+        <div class="col-md-12 border-table-filter">
+          <h2 class="mtp-6 mp-table">Фильтр</h2>
+        <div class="row">
+         <div class="col-md-3">
+            <select class="form-control">
+              <option>Статус</option>
+              <option>Онлайн</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control">
+              <option>Статус</option>
+              <option>Онлайн</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control mb-5">
+              <option>Популярность</option>
+              <option>Лучшее</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control mb-5">
+              <option>Направление</option>
+              <option>Не совсем верное</option>
+            </select>
+          </div>
+
+         </div> 
+        </div>
+        <div class="col-md-12 border-table table-responsive" id="main-print">
+            <table class="table mp-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="table-left">ФИО</th>
+                  <th scope="col">Департамент, Цех / Подразделение</th>
+                  <th scope="col">С</th>
+                  <th scope="col">По</th>
+                  <th scope="col">Причина отсутствия</th>
+                  <th scope="col">Заполнители</th>
+                </tr>
+              </thead>
+              {% for obj in journals %}
+              <tbody>
+                <tr>
+                  <th scope="row" class="table-left h-idea-header"><a href="">
+                    <span class="idea-description">{{ obj.owner.profile.get_full_name_and_position }}</span></a>
+                  </th>
+                  <td class="h-idea-company">{{ obj.owner.profile.company }}</td>
+                  <td class="h-idea-date-from">{{ obj.date_from }}</td>
+                  <td class="h-idea-date-to">{{ obj.date_to }}</td>
+                  <td class="h-idea-status">{{ obj.description }}</td>
+                  <td class="table-left h-idea-author text-center">
+                  {% for senders in obj.senders.all %}
+                    <a href=""><span class="idea-description">{{ senders.sender.profile.get_full_name }}</span></a><br>
+                  {% endfor %}
+                  </td>
+                </tr>
+              </tbody>
+              {% endfor %}
+            </table>  
+        </div>
+    </div>
+  </div>
+</section>
+
+    {% for senders in obj.senders.all %}
+      {% if forloop.counter == 1 %}
+        <span> Открыл: {{ senders.sender.profile.get_full_name }} </span><br>
+      {% elif forloop.counter == 2 %}
+        <span> Закрыл: {{ senders.sender.profile.get_full_name }} </span><br>
+      {% endif %}
+    {% endfor %}
+
+<style type="text/css">
+  .tablefontsize {
+    font-size: 14px;
+  }
+  .headertext {
+    font-size: 18px;
+    margin-top: 2rem;
+  }
+  .dividertext {
+    font-weight: bold;
+    background-color: #ddffff;
+  }
+  .tftable {
+    border-spacing:0em;
+    margin-bottom:1em;
+    margin-top:1em
+  }
+  .tftable td {padding:0.3em 1em}
+  .tftable thead td {
+
+cursor:pointer;
+cursor:hand;
+
+    font-weight:bold;
+    text-align:center;
+    background-color:#CCCCCC;
+    vertical-align:middle
+  }
+
+  .tftable thead td.curcol{
+    background-color:#999999;
+    color:#FFFFFF
+  }
+
+  .tftable tr:hover {background-color:#ddffff;}
+</style>
+
+
+# @user_is_owner_or_sender
+# @boss_required
+# def create_journal_entry_boss(request):
+# 	if request.method == 'POST':
+# 		boss_form = JournalEntryBossForm(request.POST)
+	# journal_entry = get_object_or_404(JournalEntry, pk=journal_pk)
+ #    print('updating %s') % journal_entry
+ #    update_form = JournalEntryForm(user, request.POST or None, instance=journal_entry)
+ #    if update_form.is_valid():
+ #            print('updating valid %s') % journal_entry
+ #            instance = update_form.save(commit=False)
+ #            instance.save()
+ #            s_redirect = "/detail/%i" % int(journal_pk)
+ #            # return HttpResponseRedirect(s_redirect)
+
+
+
+ {% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+
+<script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/moment-with-locales.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap-datetimepicker.min.js' %}"></script>
+
+<link href="{% static 'journal/vendor/bootstrap/css3/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+{% endblock extra_css%}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class='col-md-6'>
+    <form method="post" id="createform" autocomplete="off" novalidate>
+    {% csrf_token %}
+
+      {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+
+      {% if form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+          </div>
+      {% endif %}
+      {% for field in form.visible_fields %}
+        <div class="form-group">
+
+          {{ field.label_tag }}
+
+                  {% if form.is_bound %}
+                    {% if field.errors %}
+                        {% render_field field class="form-control is-invalid" %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field field class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field field class="form-control" %}
+                {% endif %}
+                
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" id="sButton" class="btn btn-primary form-btn-margin">Отправить</button>
+    </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+          locale: 'ru',
+            sideBySide: true,
+            useCurrent: false,
+            minDate: moment().millisecond(0).second(0).minute(0).hour(0),
+            daysOfWeekDisabled: [0, 6],
+            enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        });
+        $('#datetimepicker2').datetimepicker({
+          locale: 'ru',
+            sideBySide: true,
+            useCurrent: false,
+            minDate: moment().millisecond(0).second(0).minute(0).hour(0),
+            daysOfWeekDisabled: [0, 6],
+            enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        });
+    });
+</script>
+{% endblock extra_js%}
+
+
+
+<VirtualHost 172.18.64.78:80>
+    ServerName 172.18.64.78
+    DocumentRoot /var/www/idea
+    WSGIScriptAlias / /var/www/idea/bankideawebsite/wsgi.py
+    WSGIDaemonProcess ideamaekkz lang='en_US.UTF-8' locale='en_US.UTF-8' python-home=/var/www/idea/myenv
+    WSGIProcessGroup ideamaekkz    
+
+
+   <directory /var/www/idea>
+   AllowOverride all
+   Require all granted
+   Options FollowSymlinks
+  </directory> 
+
+   Alias /static /var/www/idea/static/
+
+   <Directory /var/www/idea/static>
+    Require all granted
+   </Directory>
+
+   <Directory /var/www/idea/media>
+    Require all granted
+   </Directory>
+
+   <Directory /var/www/idea/bankideawebsite>
+  <Files wsgi.py>
+    Require all granted
+  </Files>
+   </Directory>
+    # Other directives here
+
+</VirtualHost>
+
+SELECT *
+FROM [oriontest].[dbo].[pLogData]
+WHERE [HozOrgan] = 6519 AND [Event] = 32 AND [Mode] = 2 AND [TimeVal] >= '30/10/2019 14:40'
+ORDER BY [TimeVal] DESC;
+
+SELECT TOP 1 *
+FROM [oriontest].[dbo].[pLogData]
+WHERE [HozOrgan] = 6519 AND 
+    [Event] = 32 AND 
+    [Mode] = 2 AND
+    [TimeVal] >= '30/10/2019 14:40' AND
+    [TimeVal] <= '30/10/2019 15:44'
+ORDER BY [TimeVal] ASC;
+
+SELECT *
+FROM [oriontest].[dbo].[pLogData] AS LD
+    INNER JOIN [oriontest].[dbo].[pList] AS L
+        ON LD.[HozOrgan] = L.[ID]
+WHERE L.[ID] = 6519 AND 
+    [Event] = 32 AND
+    [TimeVal] >= '30/10/2019 14:40' AND
+    [TimeVal] <= '30/10/2019 15:44'
+ORDER BY [TimeVal] ASC;
+
+
+DECLARE 
+    @start_date datetime, 
+    @end_date datetime
+SET @start_date = '30/10/2019 15:50'
+SET @end_date = '30/10/2019 16:45'
+SELECT
+    CASE
+        WHEN (SELECT TOP 1 LD.Mode
+            FROM [dbo].[pLogData] AS LD
+            WHERE
+                LD.HozOrgan = L.ID AND 
+                [Event] = 32 AND
+                [TimeVal] >= @start_date AND
+                [TimeVal] <= @end_date
+            ORDER BY [TimeVal] ASC) = 2 THEN
+            (SELECT TOP 1 TimeVal
+            FROM [dbo].[pLogData] AS LD
+            WHERE
+                LD.HozOrgan = L.ID AND 
+                [Event] = 32 AND
+                [TimeVal] >= @start_date AND
+                [TimeVal] <= @end_date
+            ORDER BY [TimeVal] ASC)
+
+        WHEN (SELECT TOP 1 LD.Mode
+            FROM [dbo].[pLogData] AS LD
+            WHERE
+                LD.HozOrgan = L.ID AND 
+                [Event] = 32 AND
+                [TimeVal] >= '30/10/2019 00:00' AND
+                [TimeVal] <= @start_date
+            ORDER BY [TimeVal] DESC) = 2 THEN
+            (SELECT TOP 1 TimeVal
+            FROM [dbo].[pLogData] AS LD
+            WHERE
+                LD.HozOrgan = L.ID AND 
+                [Event] = 32 AND
+                [TimeVal] >= '30/10/2019 00:00' AND
+                [TimeVal] <= @start_date
+            ORDER BY [TimeVal] DESC)
+        ELSE
+            ''
+    END
+FROM [oriontest].[dbo].[pList] as L
+WHERE L.ID = 6519

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block extra_css %}
+
+<script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/moment-with-locales.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap-datetimepicker.min.js' %}"></script>
+
+<link href="{% static 'journal/vendor/bootstrap/css3/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+{% endblock extra_css%}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class='col-md-6'>
+		<form method="post" id="updateform" autocomplete="off">
+		{% csrf_token %}
+
+    	{% for hidden_field in update_form.hidden_fields %}
+          	{{ hidden_field }}
+       	{% endfor %}
+
+    	{% if update_form.non_field_errors %}
+      		<div class="alert alert-danger" role="alert">
+        		{% for error in update_form.non_field_errors %}
+          			{{ error }}
+        		{% endfor %}
+      		</div>
+    	{% endif %}
+    	{% for field in update_form.visible_fields %}
+        <div class="form-group">
+        	{{ field.label_tag }}
+            {% render_field field class="form-control" %}
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" id="sButton" class="btn btn-primary form-btn-margin">Обновить</button>
+		</form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(function () {
+        var sMinDate = $('#datetimepicker1').val()
+        console.log(sMinDate)
+        $('#datetimepicker2').datetimepicker({
+        	locale: 'ru',
+            sideBySide: true,
+            useCurrent: false,
+            minDate: moment(sMinDate, "DD.MM.YYYY HH:mm:ss"),
+            daysOfWeekDisabled: [0, 6],
+            enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        });
+    });
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#updateform').submit(function() {
+        $("#sButton").prop('disabled', true);
+        return true;
+    });
+});
+</script>
+{% endblock extra_js%}

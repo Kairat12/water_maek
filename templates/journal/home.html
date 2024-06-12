@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% load static %}
+{% load templatehelpers %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1 class="headertext" align="center">Журнал отсутствия руководящих сотрудников</h1>
+<button id="filter-toogle-btn" class="btn btn-simple">Фильтр <i class="fa fa-angle-down"></i></button>
+<div id="div-filter">
+  <form method="get" id="filterform" autocomplete="off">
+    <div class="well" style="margin-top: 20px;">
+    <div class="row">
+        <div class="form-group col-sm-4">
+          Фамилия
+          {% render_field filter.form.owner__profile__lastName__icontains class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4">
+          Имя
+          {% render_field filter.form.owner__profile__givenName__icontains class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4">
+          Отчество
+          {% render_field filter.form.owner__profile__patronymicName__icontains class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4">
+          Департамент / Подразделение
+          {% render_field filter.form.owner__profile__company__icontains class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4">
+          Дата "С"
+          {% render_field filter.form.date_from__gt class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4">
+          Дата "По"
+          {% render_field filter.form.date_to__lt class="form-control" %}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-simple-primary">Поиск</button>
+      <button id="form-clear-btn" class="btn btn-simple"><a href="{% url 'journal:index' %}#filtering" class="anchor-clear">Сбросить</a></button>
+    </div>
+  </form>
+</div>
+
+
+
+
+<table class="tftable tablefontsize" border="1" bordercolor="#019cdc" width="100%" cellpadding="11" align="center">
+<colgroup>
+    <col span = "1" class="tf25" />
+    <col span = "1" class="tf14" />
+    <col span = "1" class="tf20" />
+    <col span = "1" class="tf18" />
+    <col span = "1" class="tf23" />
+</colgroup>
+<thead>
+<tr><td>ФИО,<br>Должность</td><td>Департамент,<br>Цех \ Подразделение</td><td>С</td><td>По</td><td>Причина отсутствия</td></tr>
+</thead>
+<tbody>
+{% for obj in response %}
+<tr>
+  <td>{{ obj.owner.profile.get_fullest_name }}, <br> «{{ obj.owner.profile.position}}»</td>
+  <td>{{ obj.owner.profile.company }}</td>
+  <td>{{ obj.date_from }}
+    {% if can_see_skud %}
+      , <br>
+      {% if obj.skud_date_from is None %}
+        <span style="color: #0087cb;">пусто (СКУД)</span>
+      {% else %}
+        <span style="color: #0087cb;">{{ obj.skud_date_from }} (СКУД выход)</span>
+      {% endif %}
+    {% endif %}
+  </td>
+  {% if obj.date_to is None %}
+    {% if request.user == obj.owner %}
+    <td><a href="{% url 'journal:updatejournalentry' journal_pk=obj.pk%}" class="btn-edit">Добавить время</a></td>
+    {% else %}
+    <td>пусто</td>
+    {% endif %}
+  {% else %}
+    <td>{{ obj.date_to }}
+      {% if can_see_skud %}
+        , <br>
+        {% if obj.skud_date_to is None %}
+          <span style="color: #0087cb;">пусто (СКУД)</span>
+        {% else %}
+          <span style="color: #0087cb;">{{ obj.skud_date_to }} (СКУД вход)</span>
+        {% endif %}
+      {% endif %}
+  </td>
+  {% endif %}
+  <td>{{ obj.description }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% if response.has_other_pages %}
+  <ul class="pagination">
+    {% if response.has_previous %}
+      <li><a href="?{% param_replace page=response.previous_page_number %}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in response.paginator.page_range %}
+      {% if response.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?{% param_replace page=i %}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if response.has_next %}
+      <li><a href="?{% param_replace page=response.next_page_number %}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/moment-with-locales.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap.min.js' %}"></script>
+<script src="{% static 'journal/vendor/bootstrap/js3/bootstrap-datetimepicker.min.js' %}"></script>
+
+<link href="{% static 'journal/vendor/bootstrap/css3/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+
+<script type="text/javascript">
+  function changeBasedOnHash() {
+      var s = location.hash;
+      // console.log("changeBasedOnHash")
+      // console.log(s)
+
+      if (s == "") {
+        // console.log('set notactive')
+        window.location.hash = "#nofilter"
+      }
+
+      if (s == "#filtering") {
+        // console.log('show')
+        $("#div-filter").show();
+      }
+      else if (s == "#nofilter") {
+        $("#div-filter").hide();
+      }
+    };
+  $(document).ready(function() {
+
+    changeBasedOnHash();
+
+    $("#filter-toogle-btn").click(function() {
+      // $(this).next('#div-filter').slideToggle()
+      var es = location.hash;
+      // console.log("click")
+      // console.log(es);
+      if (es == "#nofilter") {
+        location.hash = '#filtering';
+      } 
+      else if (es == "#filtering") {
+        location.hash = '#nofilter';
+      }
+
+      $(this).find('i').toggleClass('fa fa-angle-down fa fa-angle-up');
+    });
+
+    $(window).bind( 'hashchange', function(){
+      changeBasedOnHash();
+    });
+    $('#form-clear-btn').click(function () {
+      $('INPUT:text, INPUT:password, INPUT:file, SELECT, TEXTAREA', '#filterform').val('');  
+    });
+  });
+</script>
+<script type="text/javascript">
+$(function () {
+    $('#id_date_from__gt').datetimepicker({
+      locale: 'ru',
+      format: 'L'
+    });
+    $('#id_date_to__lt').datetimepicker({
+      locale: 'ru',
+      format: 'L'
+    });
+});
+</script>
+<script type="text/javascript">
+  $('#filterform').submit(function() {
+    var date_from = $('#id_date_from__gt');
+    var date_to = $('#id_date_to__lt');
+    if (!date_from.val().replace(/\s/g,"") == "") {
+      var custom_date_from = date_from.val() + ' 00:00:00';
+      date_from.val(custom_date_from);
+    }
+    if (!date_to.val().replace(/\s/g,"") == "") {
+      var custom_date_to = date_to.val() + ' 23:59:59';
+      date_to.val(custom_date_to);
+    }
+    
+    });
+</script>
+{% endblock extra_js%}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <img class="h-100 w-100 position-absolute start-0" src="{% static 'journal/img/back.png' %}" style="z-index: -1"/>
+    <div class="container" style="margin-top: -35px">
+        <div class="row vh-100 align-items-center justify-content-center">
+            <div class="col-md-4 col-lg-3 col-xl-3 border-dark border rounded-2 pt-5 pb-5 ps-4 pe-4 h6"
+                 style="background: rgba(255,255,255, 80%)">
+
+                {% if form.errors %}
+                    <p>Вы ввели неправильный логин / пароль. Просим обратиться в службу технической поддержки по номеру 64-300</p>
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        {% if not user.is_active %}
+                            <p class="text-center">Эта учетная запись отключена.
+                            Просим обратиться в службу технической поддержки по номеру 64-300
+                            </p>
+                        {% else %}
+                            <p class="text-center">Вы не имеете права на эту страницу. Войдите под соответствующей
+                                учетной записью.</p>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-center">Пожалуйста, авторизуйтесь для входа</p>
+                    {% endif %}
+                {% endif %}
+
+
+                <form method="post" id="loginform" action="{% url 'profiles:login' %}">
+                    {% csrf_token %}
+                    {% include 'layouts/bs4_form.html' with form=form %}
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script type="text/javascript">
+        $('#loginform').submit(function () {
+            var txt = $('#id_username');
+            if (/^[a-zA-Z0-9- ]*$/.test(txt.val()) == false) {
+                var customUsername = txt.val().split('@')[0];
+                txt.val(customUsername)
+            }
+        });
+    </script>
+{% endblock extra_js %}

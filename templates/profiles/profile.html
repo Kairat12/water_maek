@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="h1 mb-6">Профиль</h1>
+    <div class="card">
+        <div class="card-body h4">
+            <br></br>
+            {% if user_info.user.username %}
+            <p class="card-text">Пользователь: {{ user_info.user.username }}</p>
+            {% elif user_info.username %}
+            <p class="card-text">Пользователь: {{ user_info.username }}</p>
+            {% endif %}
+            {% if user_info.name %}
+            <p class="card-text">Имя: {{ user_info.name }}</p>
+            {% endif %}
+            {% if user_info.subdivision %}
+            <p class="card-text">Подразделение/Департамент : {{ user_info.station }}</p>
+            {% endif %}
+{#            <p class="card-text mbm-6">Подразделение: {{ user_info.subdivision }}</p>#}
+            <a class="btn btn-primary" href="{% url 'profiles:password-change' %}">Изменить пароль</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

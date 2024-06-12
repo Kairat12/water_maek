@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <title>{% block title %}Качество воды{% endblock title%}</title>
+    <img class="h-100 w-100 position-absolute top-0 start-0" src="{% static 'journal/img/back.png' %}" style="z-index: -1" />
+    <div class="container">
+    <h2 class="h2 mt-5 bg-white rounded-2 p-2">Информация по качеству воды на {{ today|date:"d.m.Y" }}</h2>
+        <div class="mt-4 list-group h5 border-2">
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:distillate_quality_list' %}">Качество дистиллята
+                глубокой очистки (ДГО) на входе химводоочистки (ХВО) ТЭЦ-1, ТЭЦ 2, ТЭС
+                и обессоленной воды (ОВ) на выходе ХВО ТЭЦ-1, ТЭЦ 2, ТЭС</a>
+
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:feed_quality_details' %}">
+                Качество питательной воды (ПВ) ТЭЦ-1, ТЭЦ-2, ТЭС
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:boil_quality_list' %}">
+                Качество котловой воды и перегретого пара ТЭЦ-1, ТЭЦ-2, ТЭС
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:main_condensate_quality_list' %}">
+                Качество основного конденсата турбогенераторов (ТГ) ТЭЦ-1, ТЭЦ-2 ТЭС
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:source_water_quality' %}">
+                Качество исходной воды для подпитки теплосети ТЭЦ-1
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:makeup_water_quality' %}">
+                Качество подпиточной воды теплосети ТЭЦ-1
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:network_water_quality' %}">
+                Качество сетевой воды ТЭЦ-1
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:water_level_in_tanks' %}">
+                Уровни воды в баках ТЭЦ-1, ТЭЦ-2, ТЭС
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:distillate_quality_abs' %}">
+               Качество дистиллированной воды марки «А» и марки «Б» на входе ЦУВС-2
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:process_water_quality' %}">
+              Качество технической воды на выходе ЦУВС-1, ЦУВС-3
+            </a>
+            <a class="list-group-item list-group-item-action link-dark" href="{% url 'water_tables:drinking_water_quality' %}">
+              Качество питьевой воды на выходе ЦУВС-2, ЦУВС-3
+            </a>
+        </div>
+    </div>
+{% endblock content %}
