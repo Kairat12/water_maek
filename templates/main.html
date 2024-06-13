@@ -53,7 +53,7 @@
 
         Chart.register(roundedBarsPlugin);
 
-        const createChart = (ctx, label, data, criticalLevel, consumption, pressure, volume) => {
+        const createChart = (ctx, label, data, criticalLevel,criticalLevel2, consumption, pressure, volume) => {
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -61,7 +61,7 @@
                     datasets: [{
                         label: 'Уровень воды (м)',
                         data: [data],
-                        backgroundColor: data < criticalLevel ? 'rgba(255, 99, 132, 0.5)' : 'rgba(54, 162, 235, 0.5)',
+                        backgroundColor: data < criticalLevel ? 'rgba(255, 99, 132, 0.5)' : data < criticalLevel2 ? 'rgba(255,194,7,0.5)'  : 'rgba(54, 162, 235, 0.5)',
                         borderWidth: 1,
                         borderSkipped: false,
                     }]
@@ -120,6 +120,18 @@
                                         enabled: true,
                                         position: 'center'
                                     }
+                                },
+                                {
+                                    type: 'line',
+                                    scaleID: 'y',
+                                    value: criticalLevel2, // Критический уровень
+                                    borderColor: 'orange',
+                                    borderWidth: 2,
+                                    label: {
+                                        content: `Критический уровень ${criticalLevel2} м`,
+                                        enabled: true,
+                                        position: 'center'
+                                    }
                                 }
                             ]
                         }
@@ -135,7 +147,7 @@
         {% if rpv5.value is None %}
             rpv5_value = null; // Присваиваем null, если значение None
         {% else %}
-            rpv5_value = parseFloat('{{ rpv5.value }}');
+            rpv5_value = parseFloat('{{ rpv5.value }}'.replace(',', '.'));
             rpv5_consumption = parseFloat('{{ rpv5.consumption }}');
             rpv5_pressure = parseFloat('{{ rpv5.pressure }}');
             rpv5_volume = parseFloat('{{ rpv5.volume }}');
@@ -144,7 +156,7 @@
         {% if rpv6.value is None %}
             rpv6_value = null; // Присваиваем null, если значение None
         {% else %}
-            rpv6_value = parseFloat('{{ rpv6.value }}');
+            rpv6_value = parseFloat('{{ rpv6.value }}'.replace(',', '.'));
             rpv6_consumption = parseFloat('{{ rpv6.consumption }}');
             rpv6_pressure = parseFloat('{{ rpv6.pressure }}');
             rpv6_volume = parseFloat('{{ rpv6.volume }}');
@@ -153,13 +165,13 @@
         {% if rpv7.value is None %}
             rpv7_value = null; // Присваиваем null, если значение None
         {% else %}
-            rpv7_value = parseFloat('{{ rpv7.value }}');
+            rpv7_value = parseFloat('{{ rpv7.value }}'.replace(',', '.'));
             rpv7_consumption = parseFloat('{{ rpv7.consumption }}');
             rpv7_pressure = parseFloat('{{ rpv7.pressure }}');
             rpv7_volume = parseFloat('{{ rpv7.volume }}');
         {% endif %}
-        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, rpv5_consumption,rpv5_pressure, rpv5_volume);
-        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, rpv6_consumption,rpv6_pressure, rpv6_volume);
-        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, rpv7_consumption,rpv7_pressure, rpv7_volume);
+        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, rpv5_consumption,rpv5_pressure, rpv5_volume);
+        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, rpv6_consumption,rpv6_pressure, rpv6_volume);
+        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, rpv7_consumption,rpv7_pressure, rpv7_volume);
     </script>
 {% endblock %}
