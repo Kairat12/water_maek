@@ -6,6 +6,7 @@ class RPV5(models.Model):
     critical_level = models.FloatField(verbose_name='Критическое значение', default=1.09)
     consumption = models.FloatField(verbose_name='Расход', null=True, blank=True)
     pressure = models.FloatField(verbose_name='Давление', null=True, blank=True)
+    volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
 
     def __str__(self):
@@ -20,6 +21,7 @@ class RPV6(models.Model):
     critical_level = models.FloatField(verbose_name='Критическое значение', default=1.09)
     consumption = models.FloatField(verbose_name='Расход', null=True, blank=True)
     pressure = models.FloatField(verbose_name='Давление', null=True, blank=True)
+    volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
 
     def __str__(self):
@@ -34,6 +36,7 @@ class RPV7(models.Model):
     critical_level = models.FloatField(verbose_name='Критическое значение', default=1.39)
     consumption = models.FloatField(verbose_name='Расход', null=True, blank=True)
     pressure = models.FloatField(verbose_name='Давление', null=True, blank=True)
+    volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
 
     def __str__(self):
