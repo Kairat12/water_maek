@@ -163,6 +163,10 @@
                                 Объём
                             </div>
                             <div class="rpv__subtitle__value" id="rpv5_volume"></div>
+                            <div class="rpv__subtitle">
+                                Расход
+                            </div>
+                            <div class="rpv__subtitle__value" id="rpv5_consumption"></div>
                         </div>
                     </div>
                     <canvas id="chart1" height="400"></canvas>
@@ -178,6 +182,19 @@
                             <div class="rpv__subtitle">
                                 Давление
                             </div>
+                            <div class="rpv__subtitle__value" id="rpv6_pressure"></div>
+                            <div class="rpv__subtitle">
+                                Уровень
+                            </div>
+                            <div class="rpv__subtitle__value" id="rpv6_value"></div>
+                            <div class="rpv__subtitle">
+                                Объём
+                            </div>
+                            <div class="rpv__subtitle__value" id="rpv6_volume"></div>
+                            <div class="rpv__subtitle">
+                                Расход
+                            </div>
+                            <div class="rpv__subtitle__value" id="rpv6_consumption"></div>
                         </div>
                     </div>
                     <canvas id="chart2" height="400"></canvas>
@@ -193,6 +210,19 @@
                             <div class="rpv__subtitle">
                                 Давление
                             </div>
+                            <div class="rpv__subtitle__value" id="rpv7_pressure"></div>
+                            <div class="rpv__subtitle">
+                                Уровень
+                            </div>
+                            <div class="rpv__subtitle__value" id="rpv7_value"></div>
+                            <div class="rpv__subtitle">
+                                Объём
+                            </div>
+                            <div class="rpv__subtitle__value" id="rpv7_volume"></div>
+                            <div class="rpv__subtitle">
+                                Расход
+                            </div>
+                            <div class="rpv__subtitle__value" id="rpv7_consumption"></div>
                         </div>
                     </div>
                     <canvas id="chart3" height="400"></canvas>
@@ -319,10 +349,12 @@
             let rpv5_pressure_block = document.getElementById('rpv5_pressure');
             let rpv5_value_block = document.getElementById('rpv5_value');
             let rpv5_volume_block = document.getElementById('rpv5_volume');
+            let rpv5_consumption_block = document.getElementById('rpv5_consumption');
             if (rpv5_pressure_block && rpv5_value_block && rpv5_volume_block){
                 rpv5_pressure_block.textContent = rpv5_pressure + ''
                 rpv5_value_block.textContent = rpv5_value + ''
                 rpv5_volume_block.textContent = rpv5_volume + ''
+                rpv5_consumption_block.textContent = rpv5_consumption + ''
             }
         {% endif %}
         let rpv6_value, rpv6_consumption, rpv6_pressure, rpv6_volume;
@@ -330,18 +362,38 @@
             rpv6_value = null; // Присваиваем null, если значение None
         {% else %}
             rpv6_value = parseFloat('{{ rpv6.value }}'.replace(',', '.'));
-            rpv6_consumption = parseFloat('{{ rpv6.consumption }}');
-            rpv6_pressure = parseFloat('{{ rpv6.pressure }}');
-            rpv6_volume = parseFloat('{{ rpv6.volume }}');
+            rpv6_consumption = parseFloat('{{ rpv6.consumption }}'.replace(',', '.'));
+            rpv6_pressure = parseFloat('{{ rpv6.pressure }}'.replace(',', '.'));
+            rpv6_volume = parseFloat('{{ rpv6.volume }}'.replace(',', '.'));
+            let rpv6_pressure_block = document.getElementById('rpv6_pressure');
+            let rpv6_value_block = document.getElementById('rpv6_value');
+            let rpv6_volume_block = document.getElementById('rpv6_volume');
+            let rpv6_consumption_block = document.getElementById('rpv6_consumption');
+            if (rpv6_pressure_block && rpv6_value_block && rpv6_volume_block){
+                rpv6_pressure_block.textContent = rpv6_pressure + ''
+                rpv6_value_block.textContent = rpv6_value + ''
+                rpv6_volume_block.textContent = rpv6_volume + ''
+                rpv6_consumption_block.textContent = rpv6_consumption + ''
+            }
         {% endif %}
         let rpv7_value, rpv7_consumption, rpv7_pressure, rpv7_volume;
         {% if rpv7.value is None %}
             rpv7_value = null; // Присваиваем null, если значение None
         {% else %}
             rpv7_value = parseFloat('{{ rpv7.value }}'.replace(',', '.'));
-            rpv7_consumption = parseFloat('{{ rpv7.consumption }}');
-            rpv7_pressure = parseFloat('{{ rpv7.pressure }}');
-            rpv7_volume = parseFloat('{{ rpv7.volume }}');
+            rpv7_consumption = parseFloat('{{ rpv7.consumption }}'.replace(',', '.'));
+            rpv7_pressure = parseFloat('{{ rpv7.pressure }}'.replace(',', '.'));
+            rpv7_volume = parseFloat('{{ rpv7.volume }}'.replace(',', '.'));
+            let rpv7_pressure_block = document.getElementById('rpv7_pressure');
+            let rpv7_value_block = document.getElementById('rpv7_value');
+            let rpv7_volume_block = document.getElementById('rpv7_volume');
+            let rpv7_consumption_block = document.getElementById('rpv7_consumption');
+            if (rpv7_pressure_block && rpv7_value_block && rpv7_volume_block){
+                rpv7_pressure_block.textContent = rpv7_pressure + ''
+                rpv7_value_block.textContent = rpv7_value + ''
+                rpv7_volume_block.textContent = rpv7_volume + ''
+                rpv7_consumption_block.textContent = rpv7_consumption + ''
+            }
         {% endif %}
         createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, rpv5_consumption, rpv5_pressure, rpv5_volume);
         createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, rpv6_consumption, rpv6_pressure, rpv6_volume);
