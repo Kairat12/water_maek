@@ -35,7 +35,7 @@
         }
 
         .pipe_height {
-            height: 300px;
+            height: 150px;
             width: 30px;
             border-bottom: none;
         }
@@ -81,11 +81,11 @@
             background: linear-gradient(to bottom, #bdbdbd, white, #bdbdbd);
         }
 
-        .additional_pipe {
+        .additional_pipe, .additional_pipe_top {
             position: relative;
         }
 
-        .additional_pipe:after {
+        .additional_pipe:after, .additional_pipe_top:after {
             content: '';
             position: absolute;
             top: 100%;
@@ -93,6 +93,10 @@
             background: linear-gradient(to right, #bdbdbd, white, #bdbdbd);
             height: 30px;
             width: 30px;
+        }
+        .additional_pipe_top:after{
+            top: auto;
+            bottom: 100%;
         }
 
         .additional_pipe__last {
@@ -139,7 +143,6 @@
             <div class="pipe pipe_height"></div>
             <div class="row d-flex align-items-end ms-0 me-0">
                 <div class="pipe_corner"></div>
-
                 <div class="pipe pipe_width col-4 additional_pipe"></div>
                 <div class="pipe pipe_width col-4 additional_pipe"></div>
                 <div class="pipe pipe_width  additional_pipe__last"></div>
@@ -231,6 +234,13 @@
                     <canvas id="chart3" width="300" height="400"></canvas>
                 </div>
             </div>
+        </div>
+        <div class="row d-flex align-items-end ms-0 me-0">
+            <div class="pipe_corner"></div>
+            <div class="pipe pipe_width col-4 additional_pipe_top"></div>
+            <div class="pipe pipe_width col-4 additional_pipe_top"></div>
+            <div class="pipe pipe_width  additional_pipe_top additional_pipe__last"></div>
+            <div class="pipe_corner pipe_corner_rotate"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
