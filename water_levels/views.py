@@ -80,6 +80,7 @@ def upload_data(request):
                     mor_port = excel_data.iloc[found_row - 1, 21]
                     kaz_gas_aimak = excel_data.iloc[found_row - 1, 22]
                     kaspi_ecology = excel_data.iloc[found_row - 1, 23]
+                    sn = excel_data.iloc[found_row - 1, 24]
                     if tsuvs2 and tsuvs3 and tes1 and prom_zona:
                         other_rpv = OtherRPV.objects.create(
                             tsuvs2 = tsuvs2,
@@ -91,6 +92,7 @@ def upload_data(request):
                             mor_port=mor_port,
                             kaspi_ecology=kaspi_ecology,
                             kaz_gaz_aimak=kaz_gas_aimak,
+                            sn=sn,
                         )
                         other_rpv.save()
 

@@ -61,6 +61,7 @@ class OtherRPV(models.Model):
     mor_port = models.FloatField(verbose_name=' СЭЗ   морпорт (счетчик)',null=True ,blank=True)
     kaz_gaz_aimak = models.FloatField(verbose_name='КазГазАймак (счетчик)',null=True, blank=True)
     kaspi_ecology = models.FloatField(verbose_name='Каспий Эколоджи (счетчик)',null=True, blank=True)
+    sn = models.FloatField(verbose_name='Собственные нужды', null=True, blank=True)
 
     def __str__(self):
         return f'{self.tsuvs2}'
