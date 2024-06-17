@@ -29,7 +29,10 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
       <ul class="navbar-nav">
         <li class="{{ home_page }} nav-item">
-          <a class="nav-link" href="">Главная</a>
+          <a class="nav-link" href="{% url 'water_levels:index' %}">Главная</a>
+        </li>
+        <li class="{{ home_page }} nav-item">
+          <a class="nav-link" href="{% url 'water_levels:upload_data' %}">Отправка данных</a>
         </li>
 {#        <li class="nav-item {{ my_page }}">#}
 {#          <a class="nav-link" href="{% url 'subdivision:profile-subdivision' %}">Мой профиль</a>#}

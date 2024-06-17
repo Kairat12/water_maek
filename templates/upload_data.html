@@ -1,0 +1,77 @@
+{% include 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container mt-4">
+        <h2 class="h2">
+            Отправка данных
+        </h2>
+        <form class="form col-4" id="form_data" enctype="multipart/form-data">
+            <div>
+                <label for="form_date">Время</label>
+                <input class="form-control" placeholder="Укажите время" id="form_date" type="time" name="time"
+                       step="3600" required
+                />
+            </div>
+            <div>
+                <label for="form_date">Файл</label>
+                <input class="form-control" placeholder="Прикрепите файл" id="form_file" type="file" name="file"
+                       required/>
+            </div>
+            <div>
+                <input class="btn btn-primary" id="form_btn" type="submit"/>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let form_time = document.getElementById('form_time');
+        if (form_time) {
+            form_time.addEventListener('input', function (e) {
+                // Получаем текущее значение
+                let value = e.target.value;
+
+                // Если значение неполное, не изменяем его
+                if (!value) return;
+
+                // Преобразуем значение в объект даты
+                let [hours, minutes] = value.split(':');
+
+                // Устанавливаем минуты в 0
+                minutes = '00';
+
+                // Объединяем обратно в строку
+                // Устанавливаем новое значение поля ввода
+                e.target.value = `${hours}:${minutes}`;
+            });
+
+        }
+
+        document.getElementById('form_data').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var form = document.getElementById('form_data');
+            var formData = new FormData(form);
+            console.log("form", form);
+            confirm('Вы уверены что хотите отправить файл?');
+            fetch('', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Данные отправлены успещно!');
+                    window.location.href = '/';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Ошибка');
+                });
+        })
+
+
+    </script>
+{% endblock %}

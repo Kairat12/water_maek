@@ -191,10 +191,10 @@
                 <div class="chart_block">
                     <div class="">
                         <div class="border border-1 border-dark me-2">
-                            <div class="rpv__subtitle">
-                                Давление
-                            </div>
-                            <div class="rpv__subtitle__value" id="rpv5_pressure"></div>
+{#                            <div class="rpv__subtitle">#}
+{#                                Давление#}
+{#                            </div>#}
+{#                            <div class="rpv__subtitle__value" id="rpv5_pressure"></div>#}
                             <div class="rpv__subtitle">
                                 Уровень
                             </div>
@@ -203,10 +203,10 @@
                                 Объём
                             </div>
                             <div class="rpv__subtitle__value" id="rpv5_volume"></div>
-                            <div class="rpv__subtitle">
-                                Расход
-                            </div>
-                            <div class="rpv__subtitle__value" id="rpv5_consumption"></div>
+{#                            <div class="rpv__subtitle">#}
+{#                                Расход#}
+{#                            </div>#}
+{#                            <div class="rpv__subtitle__value" id="rpv5_consumption"></div>#}
                         </div>
                     </div>
                     <canvas id="chart1" width="300" height="400"></canvas>
@@ -219,10 +219,10 @@
                 <div class="chart_block">
                     <div class="">
                         <div class="border border-1 border-dark me-2">
-                            <div class="rpv__subtitle">
-                                Давление
-                            </div>
-                            <div class="rpv__subtitle__value" id="rpv6_pressure"></div>
+{#                            <div class="rpv__subtitle">#}
+{#                                Давление#}
+{#                            </div>#}
+{#                            <div class="rpv__subtitle__value" id="rpv6_pressure"></div>#}
                             <div class="rpv__subtitle">
                                 Уровень
                             </div>
@@ -231,10 +231,10 @@
                                 Объём
                             </div>
                             <div class="rpv__subtitle__value" id="rpv6_volume"></div>
-                            <div class="rpv__subtitle">
-                                Расход
-                            </div>
-                            <div class="rpv__subtitle__value" id="rpv6_consumption"></div>
+{#                            <div class="rpv__subtitle">#}
+{#                                Расход#}
+{#                            </div>#}
+{#                            <div class="rpv__subtitle__value" id="rpv6_consumption"></div>#}
                         </div>
                     </div>
                     <canvas id="chart2" width="300" height="400"></canvas>
@@ -247,10 +247,10 @@
                 <div class="chart_block">
                     <div class="">
                         <div class="border border-1 border-dark me-2">
-                            <div class="rpv__subtitle">
-                                Давление
-                            </div>
-                            <div class="rpv__subtitle__value" id="rpv7_pressure"></div>
+{#                            <div class="rpv__subtitle">#}
+{#                                Давление#}
+{#                            </div>#}
+{#                            <div class="rpv__subtitle__value" id="rpv7_pressure"></div>#}
                             <div class="rpv__subtitle">
                                 Уровень
                             </div>
@@ -259,10 +259,10 @@
                                 Объём
                             </div>
                             <div class="rpv__subtitle__value" id="rpv7_volume"></div>
-                            <div class="rpv__subtitle">
-                                Расход
-                            </div>
-                            <div class="rpv__subtitle__value" id="rpv7_consumption"></div>
+{#                            <div class="rpv__subtitle">#}
+{#                                Расход#}
+{#                            </div>#}
+{#                            <div class="rpv__subtitle__value" id="rpv7_consumption"></div>#}
                         </div>
                     </div>
                     <canvas id="chart3" width="300" height="400"></canvas>
@@ -276,15 +276,16 @@
             <div class="pipe pipe_width col-5 additional_pipe_top additional_pipe_top2"></div>
             <div class="pipe_corner pipe_corner_rotate"></div>
         </div>
+        {% if other_rpv %}
         <div class="d-flex after__charts">
             <div class="pipe pipe_height"></div>
             <div class="d-flex block__pipe__connect">
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            Расход на ЦУВС-3
+                            ЦУВС-2 - ЦУВС-3
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">1227,4 м3/ч</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs2 }} м3/ч</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
@@ -294,9 +295,9 @@
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            Расход на ЦУВС-4
+                            ЦУВС-3 - город
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">640,8 м3/ч</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs3 }} м3/ч</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
@@ -306,9 +307,9 @@
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            Расход на ТЭЦ-1
+                             Зад.85- ТЭЦ-1
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">124,3 м3/ч</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tes1 }} м3/ч</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
@@ -318,9 +319,9 @@
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            Расход на Пром. зону
+                              Пром. Зона
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">114,2 м3/ч</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.prom_zona }} м3/ч</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
@@ -330,9 +331,9 @@
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            СЭЗ МорПорт Актау
+                              ЦУВС-2-ЦУВС- 4
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">счётчик</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs4 }} м3/ч</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
@@ -342,9 +343,9 @@
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            Актау Турные уй<br> приозерный 1,2,3
+                              Приозерный
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">счётчик</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.pri_ozerny }} м3/ч  (счетчик)</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
@@ -354,9 +355,9 @@
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            Каз.Транс.Газ Аймак
+                             СЭЗ   морпорт
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">счётчик</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.mor_port }} м3/ч (счётчик)</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
@@ -366,15 +367,28 @@
                 <div class="">
                     <div class="border border-1 border-dark">
                         <div class="rpv__subtitle">
-                            К.Эк.И
+                            КазГазАймак
                         </div>
-                        <div class="rpv__subtitle__value" id="rpv7_pressure">счётчик</div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.kaz_gaz_aimak }} м3/ч (счетчик)</div>
+                    </div>
+                </div>
+                <div class="pipe pipe_width"></div>
+                <div class="pipe pipe_height"></div>
+            </div>
+            <div class="d-flex block__pipe__connect">
+                <div class="">
+                    <div class="border border-1 border-dark">
+                        <div class="rpv__subtitle">
+                           Каспий Эколоджи
+                        </div>
+                        <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.kaspi_ecology }} м3/ч (счетчик)</div>
                     </div>
                 </div>
                 <div class="pipe pipe_width"></div>
                 <div class="pipe pipe_height"></div>
             </div>
         </div>
+    {% endif %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.0"></script>
@@ -405,7 +419,7 @@
 
         Chart.register(roundedBarsPlugin);
 
-        const createChart = (ctx, label, data, criticalLevel, criticalLevel2, consumption, pressure, volume) => {
+        const createChart = (ctx, label, data, criticalLevel, criticalLevel2) => {
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -489,18 +503,12 @@
             rpv5_value = null; // Присваиваем null, если значение None
         {% else %}
             rpv5_value = parseFloat('{{ rpv5.value }}'.replace(',', '.'));
-            rpv5_consumption = parseFloat('{{ rpv5.consumption }}'.replace(',', '.'));
-            rpv5_pressure = parseFloat('{{ rpv5.pressure }}'.replace(',', '.'));
             rpv5_volume = parseFloat('{{ rpv5.volume }}'.replace(',', '.'));
-            let rpv5_pressure_block = document.getElementById('rpv5_pressure');
             let rpv5_value_block = document.getElementById('rpv5_value');
             let rpv5_volume_block = document.getElementById('rpv5_volume');
-            let rpv5_consumption_block = document.getElementById('rpv5_consumption');
-            if (rpv5_pressure_block && rpv5_value_block && rpv5_volume_block) {
-                rpv5_pressure_block.textContent = rpv5_pressure + ' м3/ч'
+            if (rpv5_value_block && rpv5_volume_block) {
                 rpv5_value_block.textContent = rpv5_value + ' м'
                 rpv5_volume_block.textContent = rpv5_volume + ' м3'
-                rpv5_consumption_block.textContent = rpv5_consumption + ' м3/ч'
             }
         {% endif %}
         let rpv6_value, rpv6_consumption, rpv6_pressure, rpv6_volume;
@@ -508,41 +516,32 @@
             rpv6_value = null; // Присваиваем null, если значение None
         {% else %}
             rpv6_value = parseFloat('{{ rpv6.value }}'.replace(',', '.'));
-            rpv6_consumption = parseFloat('{{ rpv6.consumption }}'.replace(',', '.'));
-            rpv6_pressure = parseFloat('{{ rpv6.pressure }}'.replace(',', '.'));
             rpv6_volume = parseFloat('{{ rpv6.volume }}'.replace(',', '.'));
-            let rpv6_pressure_block = document.getElementById('rpv6_pressure');
             let rpv6_value_block = document.getElementById('rpv6_value');
             let rpv6_volume_block = document.getElementById('rpv6_volume');
-            let rpv6_consumption_block = document.getElementById('rpv6_consumption');
-            if (rpv6_pressure_block && rpv6_value_block && rpv6_volume_block) {
-                rpv6_pressure_block.textContent = rpv6_pressure + ' м3/ч'
+            if (rpv6_value_block && rpv6_volume_block) {
                 rpv6_value_block.textContent = rpv6_value + ' м'
                 rpv6_volume_block.textContent = rpv6_volume + ' м3'
-                rpv6_consumption_block.textContent = rpv6_consumption + ' м3/ч'
             }
         {% endif %}
-        let rpv7_value, rpv7_consumption, rpv7_pressure, rpv7_volume;
+        let rpv7_value, rpv7_volume;
         {% if rpv7.value is None %}
             rpv7_value = null; // Присваиваем null, если значение None
         {% else %}
             rpv7_value = parseFloat('{{ rpv7.value }}'.replace(',', '.'));
-            rpv7_consumption = parseFloat('{{ rpv7.consumption }}'.replace(',', '.'));
-            rpv7_pressure = parseFloat('{{ rpv7.pressure }}'.replace(',', '.'));
             rpv7_volume = parseFloat('{{ rpv7.volume }}'.replace(',', '.'));
-            let rpv7_pressure_block = document.getElementById('rpv7_pressure');
             let rpv7_value_block = document.getElementById('rpv7_value');
             let rpv7_volume_block = document.getElementById('rpv7_volume');
-            let rpv7_consumption_block = document.getElementById('rpv7_consumption');
-            if (rpv7_pressure_block && rpv7_value_block && rpv7_volume_block) {
-                rpv7_pressure_block.textContent = rpv7_pressure + ' м3/ч'
+            if (rpv7_value_block && rpv7_volume_block) {
                 rpv7_value_block.textContent = rpv7_value + ' м'
                 rpv7_volume_block.textContent = rpv7_volume + ' м3'
-                rpv7_consumption_block.textContent = rpv7_consumption + ' м3/ч'
             }
         {% endif %}
-        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, rpv5_consumption, rpv5_pressure, rpv5_volume);
-        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, rpv6_consumption, rpv6_pressure, rpv6_volume);
-        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, rpv7_consumption, rpv7_pressure, rpv7_volume);
+        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29);
+        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29);
+        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59);
+    </script>
+    <script>
+
     </script>
 {% endblock %}
