@@ -1,0 +1,156 @@
+{% include 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1 class="text-center"> Графики </h1>
+    <div class="d-flex mt-4">
+        <div class="col-6 border p-4">
+            <h5 class="h5 text-center">Часовая производительность и распределение дистиллята</h5>
+            <canvas id="myChart" style="width:100%;" height="450"></canvas>
+        </div>
+        <div class="col-6 border p-4">
+            <h5 class="h5 text-center">Распределение дистиллята</h5>
+            <canvas id="myChart2" style="width:100%;" height="450"></canvas>
+        </div>
+    </div>
+    <div class="d-flex ">
+        <div class="col-6 border p-4">
+            <h5 class="h5 text-center">Производство и распределение питьевой воды</h5>
+            <canvas id="myChart3" style="width:100%;" height="450"></canvas>
+        </div>
+        <div class="col-6 border p-4">
+            <h5 class="h5 text-center">Распределение питьевой воды</h5>
+            <canvas id="myChart4" style="width:100%;" height="450"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.0"></script>
+    <script>
+        let xValues1 = ["Выроботка", "Распределение"];
+        const yValues1 = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+
+        new Chart("myChart", {
+            type: "line",
+            data: {
+                labels: yValues1,
+                datasets: [{
+                    label: "Выроботка",
+                    data: [2508, 2501, 2465, 2491, 2471, 2501, 2460, 2494, 2456, 2471, 2475, 2451, 2477, 2431, 2436, 2469, 2472, 2455, 2484, 2408, 2494, 2494, 2494, 2494],
+                    borderColor: "#b91d47",
+                    backgroundColor: "#b91d47",
+                    fill: false
+
+                }, {
+                    label: "Распределение",
+                    data: [2909, 2962, 2861, 2885, 2837, 2901, 2912, 2894, 2924, 2820, 2842, 2791, 2835, 2830, 2834, 2888, 2796, 2854, 2847, 2877, 2820, 2820, 2820, 2820],
+                    borderColor: "#1e7145",
+                    backgroundColor: "#1e7145",
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: false,
+                title: {
+                    display: false,
+                    text: "Часовая производительность и распределение дистиллята"
+                }
+            }
+        });
+    </script>
+    <script>
+        let xValues = ["ТЭЦ-1", "ТЭЦ-2", "ТЭС", "КазАзот", "Полив", "ДОП в цех №2", "СН"];
+        let yValues = [0, 710, 65, 169, 0, 1950, 15];
+        let barColors = [
+            "#b91d47",
+            "#00aba9",
+            "#2b5797",
+            "#e8c3b9",
+            "#1e7145",
+            "#F4A460",
+            "#9370DB"
+        ];
+
+        new Chart("myChart2", {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                responsive: false,
+                title: {
+                    display: false,
+                    text: "Распределение дистиллята"
+                }
+            }
+        });
+    </script>
+    <script>
+        let xValues3 = ["Выроботка", "Распределение"];
+        const yValues3 = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
+
+        new Chart("myChart3", {
+            type: "line",
+            data: {
+                labels: yValues3,
+                datasets: [{
+                    label: "Производство",
+                    data: [2140, 2187, 2086, 2110, 2062, 2126, 2121, 2102, 2132, 2042, 2057, 2103, 2057, 2053, 2043, 2093, 2008, 2052, 2054, 2110, 2200, 2200, 2200, 2200],
+                    borderColor: "#00aba9",
+                    backgroundColor: "#00aba9",
+                    fill: false
+
+                }, {
+                    label: "Распределение",
+                    data: [2236, 1769, 1753, 1757, 1763, 1761, 1766, 1868, 2193, 2294, 2283, 2306, 2312, 2313, 2299, 2297, 2315, 2319, 2282, 2275, 2300, 2300, 2300, 2300],
+                    borderColor: "#F4A460",
+                    backgroundColor: "#F4A460",
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: false,
+                title: {
+                    display: false,
+                    text: "Производство и распределение питьевой воды"
+                }
+            }
+        });
+    </script>
+
+    <script>
+        let xValues4 = ["ЦУВС-2-ЦУВС-3", "Зад.85-ТЭЦ-1", "Пром.зона", "ЦУВС-2-ЦУВС-4", "Приозерный", "СЭЗ морпорт", "КазГазАймак", "Каспий Эколоджи", "СН"];
+        let yValues4 = [1382, 68, 10, 654, 50, 15, 1, 5, 51];
+        let barColors4 = [
+            "#b91d47",
+            "#e8c3b9",
+            "#2b5797",
+            "#00aba9",
+            "#1e7145",
+            "#DA70D6",
+            "#8B008B",
+            "#696969",
+            "#F4A460"
+        ];
+
+        new Chart("myChart4", {
+            type: "pie",
+            data: {
+                labels: xValues4,
+                datasets: [{
+                    backgroundColor: barColors4,
+                    data: yValues4
+                }]
+            },
+            options: {
+                responsive: false,
+                title: {
+                    display: true,
+                    text: "Распределение питьевой воды"
+                }
+            }
+        });
+    </script>
+{% endblock %}
