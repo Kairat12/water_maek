@@ -34,6 +34,10 @@ def index(request):
         return render(request, 'main.html')
 
 
+@login_required
+def graphs(request):
+    return render(request, 'water_graphs.html')
+
 def upload_data(request):
     date_today = datetime.date.today()
     if request.method == 'POST':
