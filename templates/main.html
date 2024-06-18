@@ -108,7 +108,10 @@
         }
 
         .additional_pipe_top2:after {
-            left: 72%;
+            left: 96%;
+        }
+        .additional_pipe_top2{
+            margin-top: 30px;
         }
 
         .additional_pipe__last {
@@ -151,11 +154,9 @@
         }
 
         .after__charts {
-            align-items: end;
-            justify-content: end;
             margin-top: 30px;
-            margin-right: 22px;
-            flex-direction: column;
+            gap: 30px;
+            {#flex-direction: column;#}
         }
 
         .after__charts .pipe_height {
@@ -165,6 +166,18 @@
 
         .block__pipe__connect {
             align-items: center;
+            position: relative;
+        }
+        .block__pipe__connect::after{
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 37%;
+            background: linear-gradient(to right, #bdbdbd, white, #bdbdbd);
+            height: 31px;
+            width: 30px;
+            border: 1px solid;
+            border-top: none;
         }
 
         .block__pipe__connect .pipe_height {
@@ -196,7 +209,7 @@
                     <div class="">
                         <div class="border border-1 border-dark me-2">
                             <div class="rpv__subtitle">
-                                t<sub>1(1,25)</sub>
+                                t<sub>1(1,29)</sub>
                             </div>
                             <div class="rpv__subtitle__value" id="rpv5_time_1"></div>
                             <div class="rpv__subtitle">
@@ -225,7 +238,7 @@
                     <div class="">
                         <div class="border border-1 border-dark me-2">
                             <div class="rpv__subtitle">
-                                t<sub>1(1,25)</sub>
+                                t<sub>1(1,29)</sub>
                             </div>
                             <div class="rpv__subtitle__value" id="rpv6_time_1"></div>
                             <div class="rpv__subtitle">
@@ -276,15 +289,13 @@
             </div>
         </div>
         <div class="row d-flex align-items-end ms-0 me-0">
-            <div class="col-2"></div>
-            <div class="pipe_corner"></div>
-            <div class="pipe pipe_width col-4 additional_pipe_top "></div>
-            <div class="pipe pipe_width col-5 additional_pipe_top additional_pipe_top2"></div>
-            <div class="pipe_corner pipe_corner_rotate"></div>
+            <div class="pipe pipe_width col-2 additional_pipe_top"></div>
+            <div class="pipe pipe_width col-4 additional_pipe_top additional_pipe_top2 "></div>
+            <div class="pipe pipe_width col-4 additional_pipe_top additional_pipe_top2"></div>
+            <div class="pipe pipe_width col-2  additional_pipe_top3"></div>
         </div>
         {% if other_rpv %}
             <div class="d-flex after__charts">
-                <div class="pipe pipe_height"></div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
                         <div class="border border-1 border-dark">
@@ -294,8 +305,7 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs2 }} м3/ч</div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -306,8 +316,7 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs3 }} м3/ч</div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -318,8 +327,7 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tes1 }} м3/ч</div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -330,8 +338,7 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.prom_zona }} м3/ч</div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -342,8 +349,7 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs4 }} м3/ч</div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -356,8 +362,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -370,8 +375,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -384,8 +388,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -398,8 +401,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -410,8 +412,6 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.sn }} м3/ч</div>
                         </div>
                     </div>
-                    <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
                 </div>
             </div>
         {% endif %}
@@ -567,42 +567,26 @@
         createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29);
         createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59);
 
-        let rpv5Time1 = document.getElementById('rpv5_time_1');
-        let rpv5Time2 = document.getElementById('rpv5_time_2');
-        if (rpv5Time1 && rpv5Time2) {
-            let totalHours1 = (((rpv5_volume * 1000) - 5100) * 3 / 2275);
-            let hours1 = Math.floor(totalHours1);
-            let minutes1 = Math.floor((totalHours1 - hours1) * 60);
-            rpv5Time1.textContent = hours1 + " час " + minutes1 + " минут";
-            let totalHours2 = (((rpv5_volume * 1000) - 4300) * 3 / 2275);
-            let hours2 = Math.floor(totalHours2);
-            let minutes2 = Math.floor((totalHours2 - hours2) * 60);
-            rpv5Time2.textContent = hours2 + " час " + minutes2 + " минут";
-        }
-        let rpv6Time1 = document.getElementById('rpv6_time_1');
-        let rpv6Time2 = document.getElementById('rpv6_time_2');
-        if (rpv6Time1 && rpv6Time2) {
-            let totalHours1 = (((rpv6_volume * 1000) - 5100) * 3 / 2275);
-            let hours1 = Math.floor(totalHours1);
-            let minutes1 = Math.floor((totalHours1 - hours1) * 60);
-            rpv6Time1.textContent = hours1 + " час " + minutes1 + " минут";
-            let totalHours2 = (((rpv6_volume * 1000) - 4300) * 3 / 2275);
-            let hours2 = Math.floor(totalHours2);
-            let minutes2 = Math.floor((totalHours2 - hours2) * 60);
-            rpv6Time2.textContent = hours2 + " час " + minutes2 + " минут";
+        function updateTime(elementId1, elementId2, volume, offset1, offset2) {
+            let element1 = document.getElementById(elementId1);
+            let element2 = document.getElementById(elementId2);
+
+            if (element1 && element2) {
+                let totalHours1 = ((volume * 1000 - offset1) * 3 / 2275);
+                let hours1 = Math.floor(totalHours1);
+                let minutes1 = Math.floor((totalHours1 - hours1) * 60);
+                element1.textContent = hours1 + " час " + minutes1 + " минут";
+
+                let totalHours2 = ((volume * 1000 - offset2) * 3 / 2275);
+                let hours2 = Math.floor(totalHours2);
+                let minutes2 = Math.floor((totalHours2 - hours2) * 60);
+                element2.textContent = hours2 + " час " + minutes2 + " минут";
+            }
         }
 
-        let rpv7Time1 = document.getElementById('rpv7_time_1');
-        let rpv7Time2 = document.getElementById('rpv7_time_2');
-        if (rpv7Time1 && rpv7Time2) {
-            let totalHours1 = (((rpv7_volume * 1000) - 6300) * 3 / 2275);
-            let hours1 = Math.floor(totalHours1);
-            let minutes1 = Math.floor((totalHours1 - hours1) * 60);
-            rpv7Time1.textContent = hours1 + " час " + minutes1 + " минут";
-            let totalHours2 = (((rpv7_volume * 1000) - 5500) * 3 / 2275);
-            let hours2 = Math.floor(totalHours2);
-            let minutes2 = Math.floor((totalHours2 - hours2) * 60);
-            rpv7Time2.textContent = hours2 + " час " + minutes2 + " минут";
-        }
+        updateTime('rpv5_time_1', 'rpv5_time_2', rpv5_volume, 5100, 4300);
+        updateTime('rpv6_time_1', 'rpv6_time_2', rpv6_volume, 5100, 4300);
+        updateTime('rpv7_time_1', 'rpv7_time_2', rpv7_volume, 6300, 5500);
+
     </script>
 {% endblock %}
