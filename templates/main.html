@@ -229,7 +229,7 @@
 
                         </div>
                     </div>
-                    <canvas id="chart1" width="300" height="400"></canvas>
+                    <canvas id="chart1" width="400" height="400"></canvas>
                 </div>
             </div>
             <div class="col rpv__block">
@@ -257,7 +257,7 @@
                             <div class="rpv__subtitle__value" id="rpv6_volume"></div>
                         </div>
                     </div>
-                    <canvas id="chart2" width="300" height="400"></canvas>
+                    <canvas id="chart2" width="400" height="400"></canvas>
                 </div>
             </div>
             <div class="col rpv__block ">
@@ -286,7 +286,7 @@
 
                         </div>
                     </div>
-                    <canvas id="chart3" width="300" height="400"></canvas>
+                    <canvas id="chart3" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -448,7 +448,7 @@
 
         Chart.register(roundedBarsPlugin);
 
-        const createChart = (ctx, label, data, criticalLevel, criticalLevel2) => {
+        const createChart = (ctx, label, data, criticalLevel, criticalLevel2, criticalLevelVolume, criticalLevelVolume2) => {
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -500,7 +500,7 @@
                                     borderColor: 'red',
                                     borderWidth: 2,
                                     label: {
-                                        content: `Критический уровень ${criticalLevel} м`,
+                                        content: `Критический уровень ${criticalLevel} м, , объем ${criticalLevelVolume} м³`,
                                         enabled: true,
                                         position: 'center'
                                     }
@@ -512,7 +512,7 @@
                                     borderColor: 'orange',
                                     borderWidth: 2,
                                     label: {
-                                        content: `${criticalLevel2} м`,
+                                        content: `${criticalLevel2} м, , объем ${criticalLevelVolume2} м³`,
                                         enabled: true,
                                         position: 'center'
                                     }
@@ -566,9 +566,9 @@
                 rpv7_volume_block.textContent = rpv7_volume * 1000 + ' м3'
             }
         {% endif %}
-        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29);
-        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29);
-        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59);
+        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, 5100,4300);
+        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, 5100,4300);
+        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, 6300, 5500);
 
         function updateTime(elementId1, elementId2, volume, offset1, offset2) {
             let element1 = document.getElementById(elementId1);
