@@ -3,7 +3,7 @@
 {% block content %}
     <style>
         .sppv-75__block {
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .sppv-75 {
@@ -191,6 +191,7 @@
     <div class="container mb-5">
         <h3 class="h3 mt-4">Данные на {{ rpv5.record_time|date:"d.m.Y H:s"  }}</h3>
         <div class="sppv-75__block">
+            <div><h5 class="h4" style="">Выработка питьевой воды: <b>2093 м3/ч</b></h5></div>
             <div class="sppv-75">СППВ-75</div>
             <div class="pipe pipe_height"></div>
             <div class="row d-flex align-items-end ms-0 me-0">
@@ -415,6 +416,7 @@
                     </div>
                 </div>
             </div>
+            <div class="h4 mt-3 text-center">Общее потребление питьевой воды: <b>2275 м3/ч </b></div>
         {% endif %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -535,7 +537,7 @@
             let rpv5_volume_block = document.getElementById('rpv5_volume');
             if (rpv5_value_block && rpv5_volume_block) {
                 rpv5_value_block.textContent = rpv5_value + ' м'
-                rpv5_volume_block.textContent = rpv5_volume + ' м3'
+                rpv5_volume_block.textContent = rpv5_volume* 1000 + ' м3'
             }
         {% endif %}
         let rpv6_value, rpv6_consumption, rpv6_pressure, rpv6_volume;
@@ -548,7 +550,7 @@
             let rpv6_volume_block = document.getElementById('rpv6_volume');
             if (rpv6_value_block && rpv6_volume_block) {
                 rpv6_value_block.textContent = rpv6_value + ' м'
-                rpv6_volume_block.textContent = rpv6_volume + ' м3'
+                rpv6_volume_block.textContent = rpv6_volume * 1000 + ' м3'
             }
         {% endif %}
         let rpv7_value, rpv7_volume;
@@ -561,7 +563,7 @@
             let rpv7_volume_block = document.getElementById('rpv7_volume');
             if (rpv7_value_block && rpv7_volume_block) {
                 rpv7_value_block.textContent = rpv7_value + ' м'
-                rpv7_volume_block.textContent = rpv7_volume + ' м3'
+                rpv7_volume_block.textContent = rpv7_volume * 1000 + ' м3'
             }
         {% endif %}
         createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29);

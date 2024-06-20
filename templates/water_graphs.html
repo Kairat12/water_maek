@@ -9,7 +9,69 @@
         </div>
         <div class="col-6 border p-4">
             <h5 class="h5 text-center">Распределение дистиллята</h5>
-            <canvas id="myChart2" style="width:100%;" height="450"></canvas>
+            <div class="d-flex">
+                <canvas id="myChart2" style="width:100%;" height="450"></canvas>
+                <div>
+                    <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th colspan="">ДГО</th>
+                            <th colspan="">м3</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ТЭЦ-1</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>ТЭЦ-2</td>
+                            <td>710</td>
+                        </tr>
+                        <tr>
+                            <td>ТЭС</td>
+                            <td>65</td>
+                        </tr>
+                        <tr>
+                            <td>КазАзот</td>
+                            <td>169</td>
+                        </tr>
+                        <tr class="font-weight-bold">
+                            <td>Итого</td>
+                            <td>944</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th colspan="" >ДОП </th>
+                            <th colspan="" >м3 </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Полив</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>ДОП в Цех №2</td>
+                            <td>1950</td>
+                        </tr>
+                        <tr>
+                            <td>СН</td>
+                            <td>15</td>
+                        </tr>
+                        <tr class="font-weight-bold">
+                            <td>Итого</td>
+                            <td>1965</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="d-flex ">
@@ -19,7 +81,61 @@
         </div>
         <div class="col-6 border p-4">
             <h5 class="h5 text-center">Распределение питьевой воды</h5>
+            <div class="d-flex">
             <canvas id="myChart4" style="width:100%;" height="450"></canvas>
+                <div>
+                    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th colspan="">Распределение питьевой воды </th>
+                <th colspan="">м3 </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ЦУВС-2-ЦУВС-3</td>
+                <td>1382</td>
+            </tr>
+            <tr>
+                <td>Зад.85-ТЭЦ-1</td>
+                <td>68</td>
+            </tr>
+            <tr>
+                <td>Пром. зона</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>ЦУВС-2-ЦУВС-4</td>
+                <td>654</td>
+            </tr>
+            <tr>
+                <td>Приозерный</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>СЭЗ морпорт</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>КазГазАймак</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Каспий Эколоджи</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>СН</td>
+                <td>51</td>
+            </tr>
+            <tr class="font-weight-bold">
+                <td>Всего</td>
+                <td>2236</td>
+            </tr>
+        </tbody>
+    </table>
+                </div>
+                </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
