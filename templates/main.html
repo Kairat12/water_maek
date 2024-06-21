@@ -240,9 +240,20 @@
             width: 44%;
         }
 
+        .header_pipe_corner_center .pipe_corner_rotate_top {
+            transform: rotate(180deg);
+        }
+
         .top__pipe {
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
+
+        {#.top__pipe .marka__b {#}
+        {#    translate: -41%;#}
+        {#}#}
 
     </style>
     <div class="container mb-5">
@@ -250,9 +261,34 @@
         <div class="top_pipes__blocks">
             <div class="row">
                 <div class="col-3 top__pipe">
-
                 </div>
                 <div class="col-3 top__pipe">
+                    <div class="border border-1 border-dark marka__b">
+                        <div class="rpv__subtitle">
+                            ДОП с ЗПД, марка Б
+                        </div>
+                        <div class="rpv__subtitle__value">1019.2 м3/ч</div>
+                    </div>
+                    <div class="pipe pipe_height"></div>
+                </div>
+                <div class="col-3 top__pipe">
+                </div>
+                <div class="col-3 top__pipe">
+                    <div class="d-flex align-items-center">
+                    <div class="border border-1 border-dark marka__b">
+                        <div class="rpv__subtitle">
+                            ДОП с ЗПД, марка А
+                        </div>
+                        <div class="rpv__subtitle__value">1019.2 м3/ч</div>
+                    </div>
+                        <div class="pipe pipe_width" style="width: 40px"></div>
+                        <div class="border border-1 border-dark marka__b">
+                        <div class="rpv__subtitle">
+                            О.З Каспий
+                        </div>
+                        <div class="rpv__subtitle__value">46.5 м3/ч</div>
+                    </div>
+                    </div>
                     <div class="pipe pipe_height"></div>
                 </div>
             </div>
@@ -265,10 +301,16 @@
                 </div>
                 <div class="col-3 header_pipe_corner header_pipe_corner_center">
                     <div class="pipe pipe_width"></div>
-                    <div class="pipe pipe_height"></div>
+                    <div class="pipe_corner pipe_corner_rotate_top "></div>
                 </div>
-                <div class="col-3 header_pipe_corner"></div>
-                <div class="col-3 header_pipe_corner"></div>
+                <div class="col-3 header_pipe_corner">
+                    <div class="pipe_corner pipe_corner_rotate pipe_corner_rotate_top"></div>
+                    <div class="pipe pipe_width"></div>
+                </div>
+                <div class="col-3 header_pipe_corner header_pipe_corner_center">
+                    <div class="pipe pipe_width"></div>
+                    <div class="pipe_corner pipe_corner_rotate_top "></div>
+                </div>
             </div>
         </div>
         <div class="rppv__blocks">
