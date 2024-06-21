@@ -500,7 +500,7 @@
                                     borderColor: 'red',
                                     borderWidth: 2,
                                     label: {
-                                        content: `Критический уровень ${criticalLevel} м, , объем ${criticalLevelVolume} м³`,
+                                        content: `Критический уровень ${criticalLevel} м, объем ${criticalLevelVolume} м³`,
                                         enabled: true,
                                         position: 'center'
                                     }
@@ -566,9 +566,9 @@
                 rpv7_volume_block.textContent = rpv7_volume * 1000 + ' м3'
             }
         {% endif %}
-        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, 5100,4300);
-        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, 5100,4300);
-        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, 6300, 5500);
+        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29,4300 ,5100);
+        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29,4300 ,5100);
+        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59,5500 ,6300 );
 
         function updateTime(elementId1, elementId2, volume, offset1, offset2) {
             let element1 = document.getElementById(elementId1);
