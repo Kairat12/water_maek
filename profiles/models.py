@@ -88,6 +88,7 @@ class Profile(models.Model):
                               'mbalhozhaev', 'aakkaisiyeva', 'ashangitbaev',
                               'asmolenskiy', 'osviridova'
                               ]
+
                 new_profile.user.is_active = True if new_profile.user.username in boss_users else False
                 new_profile.save()
                 print("Successfully")

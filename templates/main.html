@@ -3,7 +3,7 @@
 {% block content %}
     <style>
         .sppv-75__block {
-            margin-top: 20px;
+
         }
 
         .sppv-75 {
@@ -110,7 +110,8 @@
         .additional_pipe_top2:after {
             left: 96%;
         }
-        .additional_pipe_top2{
+
+        .additional_pipe_top2 {
             margin-top: 30px;
         }
 
@@ -156,7 +157,7 @@
         .after__charts {
             margin-top: 30px;
             gap: 39px;
-            {#flex-direction: column;#}
+        {#flex-direction: column;#}
         }
 
         .after__charts .pipe_height {
@@ -168,7 +169,8 @@
             align-items: center;
             position: relative;
         }
-        .block__pipe__connect::after{
+
+        .block__pipe__connect::after {
             content: '';
             position: absolute;
             top: -30px;
@@ -187,13 +189,224 @@
         .block__pipe__connect .pipe_width {
             width: 60px;
         }
+
+        .rppv__blocks .pipe_corner_rotate {
+            transform: rotate(90deg);
+            translate: 0;
+        }
+        .rppv__blocks .col-3{
+            padding: 0;
+        }
+        .rppv__pipes{
+            margin-top: 30px;
+        }
+        .rppv__pipes .additional_pipe_top::after{
+            left: 43%;
+        }
+        .rppv__pipes .pipe_corner_rotate_top{
+            transform: rotate(270deg);
+            translate: 0 -30px;
+        }
+        .header_pipes .pipe_corner_rotate{
+            translate: 0;
+            transform: rotate(90deg);
+        }
+        .header_pipe_corner{
+            display: flex;
+            justify-content: flex-end;
+            padding: 0;
+            align-items: start;
+        }
+        .header_pipe_corner .pipe_width{
+            width: 40%;
+        }
+        .header_pipe_corner_center{
+            justify-content: flex-start;
+        }
+        .header_pipe_corner_center .pipe_height{
+            height: 60px;
+        }
+        .header_pipe_corner_center .pipe_width{
+            width: 44%;
+        }
+        .top__pipe{
+            padding: 0;
+        }
+
     </style>
     <div class="container mb-5">
-        <h3 class="h3 mt-4">Данные на {{ rpv5.record_time|date:"d.m.Y H:s"  }}</h3>
+        <h3 class="h3 mt-4">Данные на {{ rpv5.record_time|date:"d.m.Y H:s" }}</h3>
+        <div class="top_pipes__blocks">
+            <div class="row">
+                <div class="col-3 top__pipe">
+
+                </div>
+                <div class="col-3 top__pipe">
+                    <div class="pipe pipe_height"></div>
+                </div>
+            </div>
+        </div>
+        <div class="header_pipes">
+            <div class="row">
+                <div class="col-3 header_pipe_corner">
+                     <div class="pipe_corner pipe_corner_rotate pipe_corner_rotate_top"></div>
+                     <div class="pipe pipe_width"></div>
+                </div>
+                <div class="col-3 header_pipe_corner header_pipe_corner_center">
+                    <div class="pipe pipe_width"></div>
+                    <div class="pipe pipe_height"></div>
+                </div>
+                <div class="col-3 header_pipe_corner"></div>
+                <div class="col-3 header_pipe_corner"></div>
+            </div>
+        </div>
+        <div class="rppv__blocks">
+            <div class="row">
+                <div class="col-3">
+                    <div>
+                         <div class="rpv__title">
+                            <div>РППВ 1</div>
+                        </div>
+                        <div class="chart_block">
+
+                            <div class="">
+                                <div class="border border-1 border-dark me-2">
+                                    <div class="rpv__subtitle">
+                                        t<sub>1(1,29)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv1_time_1"></div>
+                                    <div class="rpv__subtitle">
+                                        t<sub>2(1,09)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv1_time_2"></div>
+                                    <div class="rpv__subtitle">
+                                        Уровень
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv1_value"></div>
+                                    <div class="rpv__subtitle">
+                                        Объём
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv1_volume"></div>
+
+                                </div>
+                            </div>
+                            <canvas id="rppv-1" width="300" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-3">
+                    <div>
+                         <div class="rpv__title">
+                            <div>РППВ 2</div>
+                        </div>
+                        <div class="chart_block">
+
+                            <div class="">
+                                <div class="border border-1 border-dark me-2">
+                                    <div class="rpv__subtitle">
+                                        t<sub>1(1,29)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv2_time_1"></div>
+                                    <div class="rpv__subtitle">
+                                        t<sub>2(1,09)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv2_time_2"></div>
+                                    <div class="rpv__subtitle">
+                                        Уровень
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv2_value"></div>
+                                    <div class="rpv__subtitle">
+                                        Объём
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rppv2_volume"></div>
+
+                                </div>
+                            </div>
+                            <canvas id="rppv-2" width="300" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-3">
+                    <div>
+                         <div class="rpv__title">
+                            <div>БРД 3</div>
+                        </div>
+                        <div class="chart_block">
+
+                            <div class="">
+                                <div class="border border-1 border-dark me-2">
+                                    <div class="rpv__subtitle">
+                                        t<sub>1(1,29)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd3_time_1"></div>
+                                    <div class="rpv__subtitle">
+                                        t<sub>2(1,09)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd3_time_2"></div>
+                                    <div class="rpv__subtitle">
+                                        Уровень
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd3_value"></div>
+                                    <div class="rpv__subtitle">
+                                        Объём
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd3_volume"></div>
+
+                                </div>
+                            </div>
+                            <canvas id="brd-3" width="300" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-3">
+                    <div>
+                         <div class="rpv__title">
+                            <div>БРД 4</div>
+                        </div>
+                        <div class="chart_block">
+
+                            <div class="">
+                                <div class="border border-1 border-dark me-2">
+                                    <div class="rpv__subtitle">
+                                        t<sub>1(1,29)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd4_time_1"></div>
+                                    <div class="rpv__subtitle">
+                                        t<sub>2(1,09)</sub>
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd4_time_2"></div>
+                                    <div class="rpv__subtitle">
+                                        Уровень
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd4_value"></div>
+                                    <div class="rpv__subtitle">
+                                        Объём
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="brd4_volume"></div>
+
+                                </div>
+                            </div>
+                            <canvas id="brd-4" width="300" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex rppv__pipes">
+                <div class="pipe_corner pipe_corner_rotate"></div>
+                <div class="pipe pipe_width col-3 additional_pipe_top"></div>
+                <div class="pipe pipe_width col-3 additional_pipe_top"></div>
+                <div class="pipe pipe_width col-3 additional_pipe_top"></div>
+                <div class="pipe pipe_width col-1"></div>
+                <div class="pipe_corner pipe_corner_rotate pipe_corner_rotate_top"></div>
+            </div>
+            <div class="pipe pipe_height" style="height: 150px"></div>
+        </div>
         <div class="sppv-75__block">
-            <div><h5 class="h4" style="">Выработка питьевой воды: <b>2093 м3/ч</b></h5></div>
-            <div class="sppv-75">СППВ-75</div>
-            <div class="pipe pipe_height"></div>
+            <div class="d-flex align-items-center">
+                <div class="sppv-75">СППВ-75</div>
+                <div><h5 class="h4 ms-4">Выработка питьевой воды: <b>2093 м3/ч</b></h5></div>
+            </div>
+            <div class="pipe pipe_height" style="height: 150px"></div>
             <div class="row d-flex align-items-end ms-0 me-0">
                 <div class="pipe_corner"></div>
                 <div class="pipe pipe_width col-4 additional_pipe"></div>
@@ -498,11 +711,12 @@
                                     scaleID: 'y',
                                     value: criticalLevel, // Критический уровень
                                     borderColor: 'red',
-                                    borderWidth: 2,
+                                    borderWidth: 5,
                                     label: {
-                                        content: `Критический уровень ${criticalLevel} м, объем ${criticalLevelVolume} м³`,
+                                        content: `${criticalLevel} м, объем ${criticalLevelVolume2} м³`,
                                         enabled: true,
-                                        position: 'center'
+                                        position: 'center',
+                                        yAdjust: -20
                                     }
                                 },
                                 {
@@ -510,11 +724,12 @@
                                     scaleID: 'y',
                                     value: criticalLevel2, // Критический уровень
                                     borderColor: 'orange',
-                                    borderWidth: 2,
+                                    borderWidth: 5,
                                     label: {
-                                        content: `${criticalLevel2} м, , объем ${criticalLevelVolume2} м³`,
+                                        content: `крит. уровень ${criticalLevel2} м, , объем ${criticalLevelVolume} м³`,
                                         enabled: true,
-                                        position: 'center'
+                                        position: 'center',
+                                        yAdjust: 20,
                                     }
                                 }
                             ]
@@ -527,6 +742,10 @@
         const ctx1 = document.getElementById('chart1').getContext('2d');
         const ctx2 = document.getElementById('chart2').getContext('2d');
         const ctx3 = document.getElementById('chart3').getContext('2d');
+        const ctx_rppv1 = document.getElementById('rppv-1').getContext('2d');
+        const ctx_rppv2 = document.getElementById('rppv-2').getContext('2d');
+        const ctx_brd3 = document.getElementById('brd-3').getContext('2d');
+        const ctx_brd4 = document.getElementById('brd-4').getContext('2d');
         let rpv5_value, rpv5_consumption, rpv5_pressure, rpv5_volume;
         {% if rpv5.value is None %}
             rpv5_value = null; // Присваиваем null, если значение None
@@ -537,7 +756,7 @@
             let rpv5_volume_block = document.getElementById('rpv5_volume');
             if (rpv5_value_block && rpv5_volume_block) {
                 rpv5_value_block.textContent = rpv5_value + ' м'
-                rpv5_volume_block.textContent = rpv5_volume* 1000 + ' м3'
+                rpv5_volume_block.textContent = rpv5_volume * 1000 + ' м3'
             }
         {% endif %}
         let rpv6_value, rpv6_consumption, rpv6_pressure, rpv6_volume;
@@ -566,9 +785,13 @@
                 rpv7_volume_block.textContent = rpv7_volume * 1000 + ' м3'
             }
         {% endif %}
-        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29,4300 ,5100);
-        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29,4300 ,5100);
-        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59,5500 ,6300 );
+        createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, 4300, 5100);
+        createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, 4300, 5100);
+        createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, 5500, 6300);
+        createChart(ctx_rppv1, 'РППВ-1', rpv7_value, 1.39, 1.59, 5500, 6300);
+        createChart(ctx_rppv2, 'РППВ-2', rpv7_value, 1.39, 1.59, 5500, 6300);
+        createChart(ctx_brd3, 'БРД-3', rpv7_value, 1.39, 1.59, 5500, 6300);
+        createChart(ctx_brd4, 'БРД-4', rpv7_value, 1.39, 1.59, 5500, 6300);
 
         function updateTime(elementId1, elementId2, volume, offset1, offset2) {
             let element1 = document.getElementById(elementId1);
