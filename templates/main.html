@@ -353,9 +353,9 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs2 }} м3/ч</div>
                         </div>
                     </div>
-                    <div class="pipe pipe_height"></div>
+
                 </div>
-                <div class="d-flex block__pipe__connect">
+                <div class="d-flex flex-column block__pipe__connect">
                     <div class="">
                         <div class="border border-1 border-dark">
                             <div class="rpv__subtitle">
@@ -364,6 +364,7 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs3 }} м3/ч</div>
                         </div>
                     </div>
+                     <div class="pipe pipe_height"></div>
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -461,6 +462,38 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex">
+            <div class="chart_block">
+                <div class="">
+                    <div class="border border-1 border-dark me-2">
+                        <div class="rpv__subtitle">
+                            Уровень
+                        </div>
+                        <div class="rpv__subtitle__value" id="rpv1_value">3.2 м</div>
+                        <div class="rpv__subtitle">
+                            Объём
+                        </div>
+                        <div class="rpv__subtitle__value" id="rpv1_volume">3200 м3</div>
+                    </div>
+                </div>
+                <canvas id="rpv-1" width="300" height="400"></canvas>
+            </div>
+             <div class="chart_block">
+                <div class="">
+                    <div class="border border-1 border-dark me-2">
+                        <div class="rpv__subtitle">
+                            Уровень
+                        </div>
+                        <div class="rpv__subtitle__value" id="rpv2_value">3.2 м</div>
+                        <div class="rpv__subtitle">
+                            Объём
+                        </div>
+                        <div class="rpv__subtitle__value" id="rpv2_volume">3200 м3</div>
+                    </div>
+                </div>
+                <canvas id="rpv-2" width="300" height="400"></canvas>
+            </div>
+            </div>
             <div class="h4 mt-3 text-center">Общее потребление питьевой воды: <b>2275 м3/ч </b></div>
         {% endif %}
     </div>
@@ -475,6 +508,8 @@
         const ctx_rppv2 = document.getElementById('rppv-2').getContext('2d');
         const ctx_brd3 = document.getElementById('brd-3').getContext('2d');
         const ctx_brd4 = document.getElementById('brd-4').getContext('2d');
+        const ctx_rpv1 = document.getElementById('rpv-1').getContext('2d');
+        const ctx_rpv2 = document.getElementById('rpv-2').getContext('2d');
         let rpv5_value, rpv5_consumption, rpv5_pressure, rpv5_volume;
         {% if rpv5.value is None %}
             rpv5_value = null; // Присваиваем null, если значение None
@@ -576,6 +611,8 @@
         createChart(ctx_rppv2, 'РППВ-2', rppv2_value, 0.5, 0, 0, 2000);
         createChart(ctx_brd3, 'БРД-3', brd3_value, 1.675, 0, 0, 6650);
         createChart(ctx_brd4, 'БРД-4', brd4_value, 1.675, 0, 0, 6650);
+        createChart(ctx_rpv1, 'РПВ-1', rpv5_value, 1.675, 0, 0, 6650);
+        createChart(ctx_rpv2, 'РПВ-2', rpv5_value, 1.675, 0, 0, 6650);
 
 
         updateTime('rpv5_time_1', 'rpv5_time_2', rpv5_volume, 5100, 4300);
