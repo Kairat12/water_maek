@@ -65,3 +65,68 @@ class OtherRPV(models.Model):
 
     def __str__(self):
         return f'{self.tsuvs2}'
+
+
+class RPPV1(models.Model):
+    level = models.FloatField(verbose_name='Уровень')
+    critical_level = models.FloatField(verbose_name='Критическое значение', default=0.5)
+    consumption = models.FloatField(verbose_name='Расход', null=True, blank=True)
+    pressure = models.FloatField(verbose_name='Давление', null=True, blank=True)
+    volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
+    record_time = models.DateTimeField(verbose_name='Время записи', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.level}'
+
+    class Meta:
+        verbose_name = 'РППВ-1'
+        verbose_name_plural = 'РППВ-1'
+
+class RPPV2(models.Model):
+    level = models.FloatField(verbose_name='Уровень')
+    critical_level = models.FloatField(verbose_name='Критическое значение', default=0.5)
+    consumption = models.FloatField(verbose_name='Расход', null=True, blank=True)
+    pressure = models.FloatField(verbose_name='Давление', null=True, blank=True)
+    volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
+    record_time = models.DateTimeField(verbose_name='Время записи', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.level}'
+
+    class Meta:
+        verbose_name = 'РППВ-2'
+        verbose_name_plural = 'РППВ-2'
+
+class BRD3(models.Model):
+    level = models.FloatField(verbose_name='Уровень')
+    critical_level = models.FloatField(verbose_name='Критическое значение', default=0.5)
+    consumption = models.FloatField(verbose_name='Расход', null=True, blank=True)
+    pressure = models.FloatField(verbose_name='Давление', null=True, blank=True)
+    volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
+    record_time = models.DateTimeField(verbose_name='Время записи', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.level}'
+
+    class Meta:
+        verbose_name = 'БРД-3'
+        verbose_name_plural = 'БРД-3'
+
+class BRD4(models.Model):
+    level = models.FloatField(verbose_name='Уровень')
+    critical_level = models.FloatField(verbose_name='Критическое значение', default=0.5)
+    consumption = models.FloatField(verbose_name='Расход', null=True, blank=True)
+    pressure = models.FloatField(verbose_name='Давление', null=True, blank=True)
+    volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
+    record_time = models.DateTimeField(verbose_name='Время записи', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.level}'
+
+    class Meta:
+        verbose_name = 'БРД-4'
+        verbose_name_plural = 'БРД-4'

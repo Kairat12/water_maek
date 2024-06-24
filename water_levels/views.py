@@ -28,8 +28,26 @@ def index(request):
         other_rpv = OtherRPV.objects.latest('id')
     except ObjectDoesNotExist:
         other_rpv = None
+    try:
+        rpvv1 = RPPV1.objects.latest('id')
+    except ObjectDoesNotExist:
+        rpvv1 = None
+    try:
+        rpvv2 = RPPV2.objects.latest('id')
+    except ObjectDoesNotExist:
+        rpvv2 = None
+    try:
+        brd3 = BRD3.objects.latest('id')
+    except ObjectDoesNotExist:
+        brd3 = None
+    try:
+        brd4 = BRD4.objects.latest('id')
+    except ObjectDoesNotExist:
+        brd4 = None
     if rpv5 and rpv6 and rpv7 and other_rpv:
-        return render(request, 'main.html', {'rpv5': rpv5, 'rpv6': rpv6, 'rpv7': rpv7, 'other_rpv': other_rpv})
+        return render(request, 'main.html', {'rpv5': rpv5, 'rpv6': rpv6, 'rpv7': rpv7,
+                                             'other_rpv': other_rpv, 'rpvv1': rpvv1, 'rpvv2': rpvv2,
+                                             'brd3': brd3, 'brd4': brd4 })
     else:
         return render(request, 'main.html')
 
