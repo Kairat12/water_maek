@@ -23,11 +23,11 @@
                     <div class="d-flex align-items-center">
                         <div class="pipe_corner pipe_corner_rotate top__pipe__corner"></div>
                         <div class="border border-1 border-dark marka__b">
-                        <div class="rpv__subtitle">
-                            О.З Каспий
+                            <div class="rpv__subtitle">
+                                О.З Каспий
+                            </div>
+                            <div class="rpv__subtitle__value">46.5 м3/ч</div>
                         </div>
-                        <div class="rpv__subtitle__value">46.5 м3/ч</div>
-                    </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="pipe pipe_height" style="height: 90px"></div>
@@ -74,10 +74,10 @@
 
                             <div class="">
                                 <div class="border border-1 border-dark me-2">
-{#                                    <div class="rpv__subtitle">#}
-{#                                        t<sub>(0,5)</sub>#}
-{#                                    </div>#}
-{#                                    <div class="rpv__subtitle__value" id="rppv1_time_1"></div>#}
+                                    {#                                    <div class="rpv__subtitle">#}
+                                    {#                                        t<sub>(0,5)</sub>#}
+                                    {#                                    </div>#}
+                                    {#                                    <div class="rpv__subtitle__value" id="rppv1_time_1"></div>#}
                                     <div class="rpv__subtitle">
                                         Уровень
                                     </div>
@@ -102,11 +102,11 @@
 
                             <div class="">
                                 <div class="border border-1 border-dark me-2">
-{#                                    <div class="rpv__subtitle">#}
-{#                                        t<sub>(0,5)</sub>#}
-{#                                    </div>#}
-{#                                    <div class="rpv__subtitle__value" id="rppv2_time_1"></div>#}
-{#                                    <div class="rpv__subtitle__value" id="rppv2_time_2"></div>#}
+                                    {#                                    <div class="rpv__subtitle">#}
+                                    {#                                        t<sub>(0,5)</sub>#}
+                                    {#                                    </div>#}
+                                    {#                                    <div class="rpv__subtitle__value" id="rppv2_time_1"></div>#}
+                                    {#                                    <div class="rpv__subtitle__value" id="rppv2_time_2"></div>#}
                                     <div class="rpv__subtitle">
                                         Уровень
                                     </div>
@@ -131,11 +131,11 @@
 
                             <div class="">
                                 <div class="border border-1 border-dark me-2">
-{#                                    <div class="rpv__subtitle">#}
-{#                                        t<sub>(1,675)</sub>#}
-{#                                    </div>#}
-{#                                    <div class="rpv__subtitle__value" id="brd3_time_1"></div>#}
-{#                                    <div class="rpv__subtitle__value" id="brd3_time_2"></div>#}
+                                    {#                                    <div class="rpv__subtitle">#}
+                                    {#                                        t<sub>(1,675)</sub>#}
+                                    {#                                    </div>#}
+                                    {#                                    <div class="rpv__subtitle__value" id="brd3_time_1"></div>#}
+                                    {#                                    <div class="rpv__subtitle__value" id="brd3_time_2"></div>#}
                                     <div class="rpv__subtitle">
                                         Уровень
                                     </div>
@@ -160,11 +160,11 @@
 
                             <div class="">
                                 <div class="border border-1 border-dark me-2">
-{#                                    <div class="rpv__subtitle">#}
-{#                                        t<sub>(1,675)</sub>#}
-{#                                    </div>#}
-{#                                    <div class="rpv__subtitle__value" id="brd4_time_1"></div>#}
-{#                                    <div class="rpv__subtitle__value" id="brd4_time_2"></div>#}
+                                    {#                                    <div class="rpv__subtitle">#}
+                                    {#                                        t<sub>(1,675)</sub>#}
+                                    {#                                    </div>#}
+                                    {#                                    <div class="rpv__subtitle__value" id="brd4_time_1"></div>#}
+                                    {#                                    <div class="rpv__subtitle__value" id="brd4_time_2"></div>#}
                                     <div class="rpv__subtitle">
                                         Уровень
                                     </div>
@@ -213,16 +213,16 @@
                         <td style="background: green; color: #FFFFFF; text-align: center">&#9650;</td>
                     </tr>
                     <tr>
+                        <td>02:00</td>
+                        <td>2090</td>
+                        <td>1897</td>
+                        <td style="background: gray; color: #FFFFFF; text-align: center"> &#10040;</td>
+                    </tr>
+                    <tr>
                         <td>01:00</td>
                         <td>2090</td>
                         <td>1897</td>
                         <td style="background: red; color: #FFFFFF; text-align: center">&#9660;</td>
-                    </tr>
-                    <tr>
-                        <td>02:00</td>
-                        <td>2090</td>
-                        <td>1897</td>
-                        <td style="background: green; color: #FFFFFF; text-align: center">&#9650;</td>
                     </tr>
                     <tr>
                         <td>03:00</td>
@@ -343,8 +343,8 @@
             <div class="pipe pipe_width col-2  additional_pipe_top3"></div>
         </div>
         {% if other_rpv %}
-            <div class="d-flex after__charts">
-                <div class="d-flex block__pipe__connect">
+            <div class="d-flex align-items-start after__charts">
+                <div class="d-flex block__pipe__connect flex-column">
                     <div class="">
                         <div class="border border-1 border-dark">
                             <div class="rpv__subtitle">
@@ -353,7 +353,7 @@
                             <div class="rpv__subtitle__value" id="rpv7_pressure">{{ other_rpv.tsuvs2 }} м3/ч</div>
                         </div>
                     </div>
-
+                    <div class="pipe pipe_height"></div>
                 </div>
                 <div class="d-flex block__pipe__connect">
                     <div class="">
@@ -542,13 +542,40 @@
             }
         {% endif %}
 
+        let brd3_value, brd3_consumption, brd3_pressure, brd3_volume;
+        {% if brd3.level is None %}
+            brd3_value = null; // Присваиваем null, если значение None
+        {% else %}
+            brd3_value = parseFloat('{{ brd3.level }}'.replace(',', '.'));
+            brd3_volume = parseFloat('{{ brd3.volume }}'.replace(',', '.'));
+            let brd3_value_block = document.getElementById('brd3_value');
+            let brd3_volume_block = document.getElementById('brd3_volume');
+            if (brd3_value_block && brd3_volume_block) {
+                brd3_value_block.textContent = brd3_value + ' м'
+                brd3_volume_block.textContent = brd3_value * 1000 + ' м3'
+            }
+        {% endif %}
+        let brd4_value, brd4_consumption, brd4_pressure, brd4_volume;
+        {% if brd4.level is None %}
+            brd4_value = null; // Присваиваем null, если значение None
+        {% else %}
+            brd4_value = parseFloat('{{ brd4.level }}'.replace(',', '.'));
+            brd4_volume = parseFloat('{{ brd4.volume }}'.replace(',', '.'));
+            let brd4_value_block = document.getElementById('brd4_value');
+            let brd4_volume_block = document.getElementById('brd4_volume');
+            if (brd4_value_block && brd4_volume_block) {
+                brd4_value_block.textContent = brd4_value + ' м'
+                brd4_volume_block.textContent = brd4_value * 1000 + ' м3'
+            }
+        {% endif %}
+
         createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, 4300, 5100);
         createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, 4300, 5100);
         createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, 5500, 6300);
         createChart(ctx_rppv1, 'РППВ-1', rppv1_value, 0.5, 0, 0, 2000);
         createChart(ctx_rppv2, 'РППВ-2', rppv2_value, 0.5, 0, 0, 2000);
-        createChart(ctx_brd3, 'БРД-3', rpv7_value, 1.675, 0, 0, 6650);
-        createChart(ctx_brd4, 'БРД-4', rpv7_value, 1.675, 0, 0, 6650);
+        createChart(ctx_brd3, 'БРД-3', brd3_value, 1.675, 0, 0, 6650);
+        createChart(ctx_brd4, 'БРД-4', brd4_value, 1.675, 0, 0, 6650);
 
 
         updateTime('rpv5_time_1', 'rpv5_time_2', rpv5_volume, 5100, 4300);
