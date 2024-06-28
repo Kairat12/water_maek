@@ -72,7 +72,7 @@ const createChart = (ctx, label, data, criticalLevel, criticalLevel2, criticalLe
                             type: 'line',
                             scaleID: 'y',
                             value: criticalLevel, // Критический уровень
-                            borderColor: 'red',
+                            borderColor: criticalLevel2 === 0 ? 'red' : 'orange',
                             borderWidth: 5,
                             label: {
                                 content: `${criticalLevel} м, объем ${criticalLevelVolume2} м³`,
@@ -85,7 +85,7 @@ const createChart = (ctx, label, data, criticalLevel, criticalLevel2, criticalLe
                             type: 'line',
                             scaleID: 'y',
                             value: criticalLevel2, // Критический уровень
-                            borderColor: 'orange',
+                            borderColor: 'red',
                             borderWidth: 5,
                             label: {
                                 content: `крит. уровень ${criticalLevel2} м, объем ${criticalLevelVolume} м³`,
