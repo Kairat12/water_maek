@@ -61,7 +61,7 @@ def upload_data(request):
     if request.method == 'POST':
         uploaded_file = request.FILES.get('file')
         time = request.POST.get('time')
-        selected_sheet_name = date_today.strftime('%d.%m.%y')
+        selected_sheet_name = date_today.strftime('%d.%m.%Y')
 
         # Здесь вы можете обработать загруженный файл и время
         # Например, вы можете сохранить файл и вывести информацию на консоль
@@ -72,8 +72,56 @@ def upload_data(request):
                 selected_time = datetime.datetime.strptime(time, '%H:%M').time()
                 print("selected_time", selected_time)
                 # Найти временной интервал в колонке B (индекс 1) в диапазоне B53:B76
-                time_values = excel_data.iloc[52:76, 1]  # 52:76 для строк 53:76 и 1 для колонки B
+                time_values = excel_data.iloc[35:59, 1]  # 52:76 для строк 53:76 и 1 для колонки B
+                time_values_1 = excel_data.iloc[4:28, 1]
                 found_row = None
+                found_row_1 = None
+
+
+                for i, time_value in enumerate(time_values_1):
+                    if pd.isnull(time_value):
+                        continue
+                    try:
+                        # Преобразуем значение ячейки в формат времени (HH.MM)
+                        cell_time = datetime.datetime.strptime(time_value, '%H.%M').time()
+                        print("cell_time", cell_time)
+                    except ValueError:
+                        continue
+
+                    # Проверка, совпадает ли выбранное время с временем в ячейке
+                    if cell_time == selected_time:
+                        found_row_1 = 4 + i + 1
+                        print("found_row_1", found_row_1)
+                        break
+
+                if found_row_1:
+                    combined_datetime = datetime.datetime.combine(date_today, selected_time)
+                    rppv_1_level = excel_data.iloc[found_row_1 - 1, 28]
+                    rppv_1_volume = excel_data.iloc[found_row_1 - 1, 30]
+                    rppv_2_level = excel_data.iloc[found_row_1 - 1, 32]
+                    rppv_2_volume = excel_data.iloc[found_row_1 - 1, 34]
+                    brd_3_level = excel_data.iloc[found_row_1 - 1, 36]
+                    brd_3_volume = excel_data.iloc[found_row_1 - 1, 38]
+                    brd_4_level = excel_data.iloc[found_row_1 - 1, 40]
+                    brd_4_volume = excel_data.iloc[found_row_1 - 1, 42]
+                    if rppv_1_level and rppv_1_volume:
+                        rppv_1 = RPPV1.objects.create(level=round(rppv_1_level, 2), volume=round(rppv_1_volume, 2),
+                                                   record_time=combined_datetime)
+                        rppv_1.save()
+                    if rppv_2_level and rppv_2_volume:
+                        rppv_2 = RPPV2.objects.create(level=round(rppv_2_level, 2), volume=round(rppv_2_volume, 2),
+                                                   record_time=combined_datetime)
+                        rppv_2.save()
+                    if brd_3_level and brd_3_volume:
+                        brd_3 = BRD3.objects.create(level=round(brd_3_level, 2), volume=round(brd_3_volume, 2),
+                                                   record_time=combined_datetime)
+                        brd_3.save()
+                    if brd_4_level and brd_4_level:
+                        brd_4 = BRD4.objects.create(level=round(brd_4_level, 2), volume=round(brd_4_volume, 2),
+                                                   record_time=combined_datetime)
+                        brd_4.save()
+
+
 
                 for i, time_value in enumerate(time_values):
                     if pd.isnull(time_value):
@@ -87,55 +135,56 @@ def upload_data(request):
 
                     # Проверка, совпадает ли выбранное время с временем в ячейке
                     if cell_time == selected_time:
-                        found_row = 52 + i + 1
+                        found_row = 35 + i + 1
                         print("found_row", found_row)
                         break
 
                 if found_row:
                     combined_datetime = datetime.datetime.combine(date_today, selected_time)
-                    tsuvs2 = excel_data.iloc[found_row - 1, 15]
-                    tsuvs3 = excel_data.iloc[found_row - 1, 16]
-                    tes1 = excel_data.iloc[found_row - 1, 17]
-                    prom_zona = excel_data.iloc[found_row - 1, 18]
-                    tsuvs4 = excel_data.iloc[found_row - 1, 19]
-                    pri_ozerny = excel_data.iloc[found_row - 1, 20]
-                    mor_port = excel_data.iloc[found_row - 1, 21]
-                    kaz_gas_aimak = excel_data.iloc[found_row - 1, 22]
-                    kaspi_ecology = excel_data.iloc[found_row - 1, 23]
-                    sn = excel_data.iloc[found_row - 1, 24]
+                    tsuvs2 = excel_data.iloc[found_row - 1, 28]
+                    tsuvs3 = excel_data.iloc[found_row - 1, 29]
+                    tes1 = excel_data.iloc[found_row - 1, 30]
+                    prom_zona = excel_data.iloc[found_row - 1, 31]
+                    tsuvs4 = excel_data.iloc[found_row - 1, 32]
+                    pri_ozerny = excel_data.iloc[found_row - 1, 33]
+                    mor_port = excel_data.iloc[found_row - 1, 34]
+                    kaz_gas_aimak = excel_data.iloc[found_row - 1, 35]
+                    kaspi_ecology = excel_data.iloc[found_row - 1, 36]
+                    sn = excel_data.iloc[found_row - 1, 37]
                     if tsuvs2 and tsuvs3 and tes1 and prom_zona:
                         other_rpv = OtherRPV.objects.create(
-                            tsuvs2 = tsuvs2,
-                            tsuvs3 = tsuvs3,
-                            tes1=tes1,
-                            prom_zona=prom_zona,
-                            tsuvs4=tsuvs4,
-                            pri_ozerny=pri_ozerny,
-                            mor_port=mor_port,
-                            kaspi_ecology=kaspi_ecology,
-                            kaz_gaz_aimak=kaz_gas_aimak,
-                            sn=sn,
+                            tsuvs2 = round(tsuvs2),
+                            tsuvs3 = round(tsuvs3),
+                            tes1=round(tes1),
+                            prom_zona=round(prom_zona),
+                            tsuvs4=round(tsuvs4),
+                            pri_ozerny=round(pri_ozerny),
+                            mor_port=round(mor_port),
+                            kaspi_ecology=round(kaspi_ecology),
+                            kaz_gaz_aimak=round(kaz_gas_aimak),
+                            sn=round(sn),
                         )
                         other_rpv.save()
 
-                    value_for_rpv5 = excel_data.iloc[found_row - 1, 26]  # RPV 5 data
-                    volume_for_rpv5 = excel_data.iloc[found_row - 1, 27]  # RPV 5 data
-                    value_for_rpv6 = excel_data.iloc[found_row - 1, 28]  # RPV6
-                    volume_for_rpv6 = excel_data.iloc[found_row - 1, 29]
-                    value_for_rpv7 = excel_data.iloc[found_row - 1, 30]  # RPV7
-                    volume_for_rpv7 = excel_data.iloc[found_row - 1, 31]
+                    value_for_rpv5 = excel_data.iloc[found_row - 1, 6]  # RPV 5 data
+                    volume_for_rpv5 = excel_data.iloc[found_row - 1, 8]  # RPV 5 data
+                    value_for_rpv6 = excel_data.iloc[found_row - 1, 10]  # RPV6
+                    volume_for_rpv6 = excel_data.iloc[found_row - 1, 12]
+                    value_for_rpv7 = excel_data.iloc[found_row - 1, 14]  # RPV7
+                    volume_for_rpv7 = excel_data.iloc[found_row - 1, 16]
                     if value_for_rpv5 and volume_for_rpv5:
-                        rpv5 = RPV5.objects.create(value=value_for_rpv5, volume=volume_for_rpv5,
+                        rpv5 = RPV5.objects.create(value=round(value_for_rpv5, 2), volume=round(volume_for_rpv5, 2),
                                                    record_time=combined_datetime)
                         rpv5.save()
                     if value_for_rpv6 and volume_for_rpv6:
-                        rpv6 = RPV6.objects.create(value=value_for_rpv6, volume=volume_for_rpv6,
+                        rpv6 = RPV6.objects.create(value=round(value_for_rpv6, 2), volume=round(volume_for_rpv6, 2),
                                                    record_time=combined_datetime)
                         rpv6.save()
                     if value_for_rpv7 and volume_for_rpv7:
-                        rpv7 = RPV7.objects.create(value=value_for_rpv7, volume=volume_for_rpv7,
+                        rpv7 = RPV7.objects.create(value=round(value_for_rpv7, 2), volume=round(volume_for_rpv7, 2),
                                                    record_time=combined_datetime)
                         rpv7.save()
+
                     return JsonResponse({'message': 'File and time received successfully!', 'row': found_row})
                 else:
                     return JsonResponse({'error': 'No matching time found'}, status=400)

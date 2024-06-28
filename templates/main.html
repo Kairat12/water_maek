@@ -522,6 +522,19 @@
         const ctx_brd4 = document.getElementById('brd-4').getContext('2d');
         const ctx_rpv1 = document.getElementById('rpv-1').getContext('2d');
         const ctx_rpv2 = document.getElementById('rpv-2').getContext('2d');
+        {#let rpv1_value, rpv1_consumption, rpv1_pressure, rpv1_volume;#}
+        {#{% if rpv1.value is None %}#}
+        {#    rpv1_value = null; // Присваиваем null, если значение None#}
+        {#{% else %}#}
+        {#    rpv1_value = parseFloat('{{ rpv1.value }}'.replace(',', '.'));#}
+        {#    rpv1_volume = parseFloat('{{ rpv1.volume }}'.replace(',', '.'));#}
+        {#    let rpv1_value_block = document.getElementById('rpv1_value');#}
+        {#    let rpv1_volume_block = document.getElementById('rpv1_volume');#}
+        {#    if (rpv1_value_block && rpv1_volume_block) {#}
+        {#        rpv1_value_block.textContent = rpv1_value + ' м'#}
+        {#        rpv1_volume_block.textContent = rpv1_volume * 1000 + ' м3'#}
+        {#    }#}
+        {#{% endif %}#}
         let rpv5_value, rpv5_consumption, rpv5_pressure, rpv5_volume;
         {% if rpv5.value is None %}
             rpv5_value = null; // Присваиваем null, если значение None
@@ -571,7 +584,7 @@
             let rppv1_volume_block = document.getElementById('rppv1_volume');
             if (rppv1_value_block && rppv1_volume_block) {
                 rppv1_value_block.textContent = rppv1_value + ' м'
-                rppv1_volume_block.textContent = rppv1_value * 1000 + ' м3'
+                rppv1_volume_block.textContent = rppv1_volume * 1000 + ' м3'
             }
         {% endif %}
 
@@ -585,7 +598,7 @@
             let rppv2_volume_block = document.getElementById('rppv2_volume');
             if (rppv2_value_block && rppv2_volume_block) {
                 rppv2_value_block.textContent = rppv2_value + ' м'
-                rppv2_volume_block.textContent = rppv2_value * 1000 + ' м3'
+                rppv2_volume_block.textContent = rppv2_volume * 1000 + ' м3'
             }
         {% endif %}
 
@@ -599,7 +612,7 @@
             let brd3_volume_block = document.getElementById('brd3_volume');
             if (brd3_value_block && brd3_volume_block) {
                 brd3_value_block.textContent = brd3_value + ' м'
-                brd3_volume_block.textContent = brd3_value * 1000 + ' м3'
+                brd3_volume_block.textContent = brd3_volume * 1000 + ' м3'
             }
         {% endif %}
         let brd4_value, brd4_consumption, brd4_pressure, brd4_volume;
@@ -612,7 +625,7 @@
             let brd4_volume_block = document.getElementById('brd4_volume');
             if (brd4_value_block && brd4_volume_block) {
                 brd4_value_block.textContent = brd4_value + ' м'
-                brd4_volume_block.textContent = brd4_value * 1000 + ' м3'
+                brd4_volume_block.textContent = brd4_volume * 1000 + ' м3'
             }
         {% endif %}
 
