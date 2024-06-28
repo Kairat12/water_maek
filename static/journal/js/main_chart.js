@@ -90,10 +90,10 @@ const createChart = (ctx, label, data, criticalLevel, criticalLevel2, criticalLe
                             borderColor: 'orange',
                             borderWidth: 5,
                             label: {
-                                content: `e ${criticalLevel2} м, объем ${criticalLevelVolume2} м³`,
+                                content: `${criticalLevel2} м, объем ${criticalLevelVolume2} м³`,
                                 enabled: true,
                                 position: 'center',
-                                yAdjust: 10,
+                                yAdjust: -12,
                             }
                         }] : [])
                     ]
