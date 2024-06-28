@@ -24,6 +24,8 @@ const roundedBarsPlugin = {
 Chart.register(roundedBarsPlugin);
 
 const createChart = (ctx, label, data, criticalLevel, criticalLevel2, criticalLevelVolume, criticalLevelVolume2) => {
+    console.log("criticalLevel", criticalLevel);
+    console.log("criticalLevel2", criticalLevel2);
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -72,26 +74,26 @@ const createChart = (ctx, label, data, criticalLevel, criticalLevel2, criticalLe
                             type: 'line',
                             scaleID: 'y',
                             value: criticalLevel, // Критический уровень
-                            borderColor: criticalLevel2 === 0 ? 'red' : 'orange',
+                            borderColor: criticalLevelVolume > 0 ? 'red' : 'orange',
                             borderWidth: 5,
                             label: {
-                                content: `${criticalLevel} м, объем ${criticalLevelVolume2} м³`,
+                                content: `${criticalLevel} м, объем ${criticalLevelVolume} м³`,
                                 enabled: true,
                                 position: 'center',
-                                yAdjust: -20
+                                yAdjust: 0
                             }
                         },
-                        ...(criticalLevel2 !== 0 ? [{
+                        ...(criticalLevel2 > 0 ? [{
                             type: 'line',
                             scaleID: 'y',
                             value: criticalLevel2, // Критический уровень
-                            borderColor: 'red',
+                            borderColor: 'orange',
                             borderWidth: 5,
                             label: {
-                                content: `крит. уровень ${criticalLevel2} м, объем ${criticalLevelVolume} м³`,
+                                content: `e ${criticalLevel2} м, объем ${criticalLevelVolume2} м³`,
                                 enabled: true,
                                 position: 'center',
-                                yAdjust: 20,
+                                yAdjust: 10,
                             }
                         }] : [])
                     ]
