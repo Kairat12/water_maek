@@ -103,6 +103,51 @@ def upload_data(request):
                     brd_3_level = excel_data.iloc[found_row_1 - 1, 36]
                     brd_3_volume = excel_data.iloc[found_row_1 - 1, 38]
                     brd_4_level = excel_data.iloc[found_row_1 - 1, 40]
+
+                    temperature_val = excel_data.iloc[found_row_1 - 1, 27]
+                    if temperature_val:
+                        temperature = Temperature.objects.create(
+                            temp=temperature_val,
+                            record_time=combined_datetime
+                        )
+                        temperature.save()
+
+
+                    dop_poliv = excel_data.iloc[found_row_1 - 1, 17]
+                    dop_tceh_left = excel_data.iloc[found_row_1 - 1, 18]
+                    dop_tceh_right = excel_data.iloc[found_row_1 - 1, 19]
+                    dop_tceh = excel_data.iloc[found_row_1 - 1, 20]
+                    dop_cn = excel_data.iloc[found_row_1 - 1, 21]
+                    dop_total = excel_data.iloc[found_row_1 - 1, 22]
+
+                    if dop_poliv and dop_tceh_left and dop_tceh_right and dop_tceh and dop_cn and dop_total:
+                        dop = DOP.objects.create(
+                            poliv=dop_poliv,
+                            tceh=dop_tceh,
+                            dop_left=dop_tceh_left,
+                            dop_right=dop_tceh_right,
+                            cn=dop_cn,
+                            total=dop_total,
+                            record_time=combined_datetime
+                        )
+                        dop.save()
+
+                    dgo_tec_1 = excel_data.iloc[found_row_1 - 1, 12]
+                    dgo_tec_2 = excel_data.iloc[found_row_1 - 1, 13]
+                    dgo_tes = excel_data.iloc[found_row_1 - 1, 14]
+                    dgo_kaz_azot = excel_data.iloc[found_row_1 - 1, 15]
+                    dgo_total = excel_data.iloc[found_row_1 - 1, 16]
+
+                    if dgo_tec_1 and dgo_tec_2 and dgo_tes and dgo_kaz_azot and dgo_total:
+                        dgo = DGO.objects.create(
+                            tec_1=dgo_tec_1,
+                            tec_2=dgo_tec_2,
+                            tes_1=dgo_tes,
+                            kaz_azot=dgo_kaz_azot,
+                            total=dgo_total
+                        )
+                        dgo.save()
+
                     brd_4_volume = excel_data.iloc[found_row_1 - 1, 42]
                     if rppv_1_level and rppv_1_volume:
                         rppv_1 = RPPV1.objects.create(level=round(rppv_1_level, 2), volume=round(rppv_1_volume, 2),
@@ -120,6 +165,8 @@ def upload_data(request):
                         brd_4 = BRD4.objects.create(level=round(brd_4_level, 2), volume=round(brd_4_volume, 2),
                                                    record_time=combined_datetime)
                         brd_4.save()
+
+
 
 
 
@@ -165,6 +212,17 @@ def upload_data(request):
                             sn=round(sn),
                         )
                         other_rpv.save()
+                    output_water = excel_data.iloc[found_row - 1, 38]
+                    input_water = excel_data.iloc[found_row - 1, 5]
+                    input_output_id = None
+                    if output_water and input_water:
+                        input_output = InputOutputWater.objects.create(input_water=input_water,
+                                                                       output_water=output_water,
+                                                                       record_time=combined_datetime)
+                        input_output_id = input_output.id
+                        input_output.save()
+
+
 
                     value_for_rpv5 = excel_data.iloc[found_row - 1, 6]  # RPV 5 data
                     volume_for_rpv5 = excel_data.iloc[found_row - 1, 8]  # RPV 5 data
@@ -174,15 +232,15 @@ def upload_data(request):
                     volume_for_rpv7 = excel_data.iloc[found_row - 1, 16]
                     if value_for_rpv5 and volume_for_rpv5:
                         rpv5 = RPV5.objects.create(value=round(value_for_rpv5, 2), volume=round(volume_for_rpv5, 2),
-                                                   record_time=combined_datetime)
+                                                   record_time=combined_datetime, input_output_water=input_output_id)
                         rpv5.save()
                     if value_for_rpv6 and volume_for_rpv6:
                         rpv6 = RPV6.objects.create(value=round(value_for_rpv6, 2), volume=round(volume_for_rpv6, 2),
-                                                   record_time=combined_datetime)
+                                                   record_time=combined_datetime, input_output_water=input_output_id)
                         rpv6.save()
                     if value_for_rpv7 and volume_for_rpv7:
                         rpv7 = RPV7.objects.create(value=round(value_for_rpv7, 2), volume=round(volume_for_rpv7, 2),
-                                                   record_time=combined_datetime)
+                                                   record_time=combined_datetime, input_output_water=input_output_id)
                         rpv7.save()
 
                     return JsonResponse({'message': 'File and time received successfully!', 'row': found_row})

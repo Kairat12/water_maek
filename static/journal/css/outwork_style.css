@@ -958,7 +958,9 @@ footer.footer {
     transform: rotate(90deg);
     translate: 0;
 }
-
+.additional_pipe__2::after{
+    left: 46%;
+}
 
 @media (min-width: 1700px) {
     .container {

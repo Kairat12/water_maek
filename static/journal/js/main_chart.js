@@ -24,8 +24,6 @@ const roundedBarsPlugin = {
 Chart.register(roundedBarsPlugin);
 
 const createChart = (ctx, label, data, criticalLevel, criticalLevel2, criticalLevelVolume, criticalLevelVolume2) => {
-    console.log("criticalLevel", criticalLevel);
-    console.log("criticalLevel2", criticalLevel2);
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -109,14 +107,15 @@ function updateTime(elementId1, elementId2, volume, offset1, offset2) {
 
     if (element1) {
         let totalHours1 = ((volume * 1000 - offset1) * 3 / 2275);
-        let hours1 = Math.floor(totalHours1);
-        let minutes1 = Math.floor((totalHours1 - hours1) * 60);
+        let hours1 = totalHours1 > 0 ? Math.floor(totalHours1) : 0;
+        let minutes1 = totalHours1 > 0 ? Math.floor((totalHours1 - hours1) * 60) : 0;
+        console.log("totalHours1", totalHours1)
         element1.textContent = hours1 + " час " + minutes1 + " минут";
         }
     if (element2){
         let totalHours2 = ((volume * 1000 - offset2) * 3 / 2275);
-        let hours2 = Math.floor(totalHours2);
-        let minutes2 = Math.floor((totalHours2 - hours2) * 60);
+        let hours2 = totalHours2 > 0 ? Math.floor(totalHours2) : 0;
+        let minutes2 =  totalHours2 > 0 ? Math.floor((totalHours2 - hours2) * 60) : 0;
         element2.textContent = hours2 + " час " + minutes2 + " минут";
     }
 }

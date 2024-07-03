@@ -185,7 +185,19 @@
                 <div class="pipe_corner pipe_corner_rotate"></div>
                 <div class="pipe pipe_width col-3 additional_pipe_top"></div>
                 <div class="pipe pipe_width col-3 additional_pipe_top"></div>
-                <div class="pipe pipe_width col-3 additional_pipe_top"></div>
+                <div class="col-3 position-relative">
+                    <div class="pipe pipe_width additional_pipe_top"></div>
+                    <div class="position-absolute d-flex flex-column align-items-center" style="left: 23%">
+                        <div class="pipe pipe_height"></div>
+                        <div class="border border-1 border-dark">
+
+                            <div class="rpv__subtitle ">
+                                Тех. вода на приготов. воды
+                            </div>
+                            <div class="rpv__subtitle__value">1019.2 м3/ч</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="pipe pipe_width col-1"></div>
                 <div class="pipe_corner pipe_corner_rotate pipe_corner_rotate_top"></div>
             </div>
@@ -468,41 +480,50 @@
                         <div class="pipe_corner"></div>
                         <div class="pipe pipe_width additional_pipe" style="width: calc(100% - 60px)"></div>
                     </div>
-
-                    <div class="chart_block" style="margin-top: 30px;">
-                        <div class="">
-                            <div class="border border-1 border-dark me-2">
-                                <div class="rpv__subtitle">
-                                    Уровень
-                                </div>
-                                <div class="rpv__subtitle__value" id="rpv1_value">3.2 м</div>
-                                <div class="rpv__subtitle">
-                                    Объём
-                                </div>
-                                <div class="rpv__subtitle__value" id="rpv1_volume">3200 м3</div>
-                            </div>
+                    <div style="margin-top: 30px;">
+                        <div class="rpv__title">
+                            <div>РПВ 1</div>
                         </div>
-                        <canvas id="rpv-1" width="300" height="400"></canvas>
+                        <div class="chart_block">
+                            <div class="">
+                                <div class="border border-1 border-dark me-2">
+                                    <div class="rpv__subtitle">
+                                        Уровень
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rpv1_value">3.2 м</div>
+                                    <div class="rpv__subtitle">
+                                        Объём
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rpv1_volume">3200 м3</div>
+                                </div>
+                            </div>
+                            <canvas id="rpv-1" width="300" height="400"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div>
                     <div class="d-flex align-items-end" style="margin-top: 130px">
-                        <div class="pipe pipe_width additional_pipe" style="width: calc(100% - 60px)"></div>
+                        <div class="pipe pipe_width additional_pipe additional_pipe__2 w-100"></div>
                     </div>
-                    <div class="chart_block" style="margin-top: 30px;">
-                        <div class="">
-                            <div class="border border-1 border-dark me-2">
-                                <div class="rpv__subtitle">
-                                    Уровень
-                                </div>
-                                <div class="rpv__subtitle__value" id="rpv2_value">3.2 м</div>
-                                <div class="rpv__subtitle">
-                                    Объём
-                                </div>
-                                <div class="rpv__subtitle__value" id="rpv2_volume">3200 м3</div>
-                            </div>
+                    <div style="margin-top: 30px;">
+                        <div class="rpv__title">
+                            <div>РПВ 2</div>
                         </div>
-                        <canvas id="rpv-2" width="300" height="400"></canvas>
+                        <div class="chart_block">
+                            <div class="">
+                                <div class="border border-1 border-dark me-2">
+                                    <div class="rpv__subtitle">
+                                        Уровень
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rpv2_value">3.2 м</div>
+                                    <div class="rpv__subtitle">
+                                        Объём
+                                    </div>
+                                    <div class="rpv__subtitle__value" id="rpv2_volume">3200 м3</div>
+                                </div>
+                            </div>
+                            <canvas id="rpv-2" width="300" height="400"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -632,7 +653,7 @@
         createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, 4300, 5100);
         createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, 4300, 5100);
         createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, 5500, 6300);
-        createChart(ctx_rppv1, 'РППВ-1', rppv1_value, 0.5, 0, 2000,0);
+        createChart(ctx_rppv1, 'РППВ-1', rppv1_value, 0.5, 0, 2000, 0);
         createChart(ctx_rppv2, 'РППВ-2', rppv2_value, 0.5, 0, 2000, 0);
         createChart(ctx_brd3, 'БРД-3', brd3_value, 1.675, 0, 6650, 0);
         createChart(ctx_brd4, 'БРД-4', brd4_value, 1.675, 0, 6650, 0);

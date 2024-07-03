@@ -3,6 +3,9 @@ from django.contrib import admin
 from .models import *
 
 # Register your models here.
+admin.site.register(InputOutputWater)
+admin.site.register(RPV1)
+admin.site.register(RPV2)
 admin.site.register(RPV5)
 admin.site.register(RPV6)
 admin.site.register(RPV7)
