@@ -192,10 +192,11 @@ def upload_data(request):
                     dop_right = excel_data.iloc[found_row_1 - 1, 25]
                     if dop_left and dop_right:
                         dop_input = DOPInput.objects.create(
-                            dop_left=dop_left,
-                            dop_right=dop_right,
+                            dop_left=round(dop_left,2),
+                            dop_right=round(dop_right,2),
                             record_time=combined_datetime,
                         )
+                        dop_input.save()
 
 
                     if rppv_1_level and rppv_1_volume:
