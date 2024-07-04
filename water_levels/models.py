@@ -18,24 +18,24 @@ class RPV5(models.Model):
     volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
     record_time = models.DateTimeField(verbose_name='Время записи', blank=True, null=True)
-    time_1 = models.FloatField(verbose_name='t1(1.29)', blank=True, null=True)
-    time_2 = models.FloatField(verbose_name='t1(1.09)', blank=True, null=True)
+    # time_1 = models.FloatField(verbose_name='t1(1.29)', blank=True, null=True)
+    # time_2 = models.FloatField(verbose_name='t1(1.09)', blank=True, null=True)
     input_output_water = models.ForeignKey(InputOutputWater, on_delete=models.CASCADE, verbose_name='Вход/Выход воды', blank=True, null=True)
 
     def __str__(self):
         return f'{self.record_time}-{self.value}'
 
-    def save(self, *args, **kwargs):
-        try:
-            output_water = self.input_output_water.output_water
-            if output_water is not None and output_water != 0:
-                self.time_1 = ((self.value - 5100) * 3) / output_water
-                self.time_2 = ((self.value - 4300) * 3) / output_water
-        except ObjectDoesNotExist:
-            self.time_1 = None
-            self.time_2 = None
-
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     try:
+    #         output_water = self.input_output_water.output_water
+    #         if output_water is not None and output_water != 0:
+    #             self.time_1 = ((self.value - 5100) * 3) / output_water if self.value > 5100 else 0
+    #             self.time_2 = ((self.value - 4300) * 3) / output_water if self.value > 4300 else 0
+    #     except ObjectDoesNotExist:
+    #         self.time_1 = 0
+    #         self.time_2 = 0
+    #
+    #     super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'РПВ-5'
@@ -50,24 +50,24 @@ class RPV6(models.Model):
     volume = models.FloatField(verbose_name='Объем', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
     record_time = models.DateTimeField(verbose_name='Время записи', blank=True, null=True)
-    time_1 = models.FloatField(verbose_name='t1(1.29)', blank=True, null=True)
-    time_2 = models.FloatField(verbose_name='t1(1.09)', blank=True, null=True)
+    # time_1 = models.FloatField(verbose_name='t1(1.29)', blank=True, null=True)
+    # time_2 = models.FloatField(verbose_name='t1(1.09)', blank=True, null=True)
     input_output_water = models.ForeignKey(InputOutputWater, on_delete=models.CASCADE, verbose_name='Вход/Выход воды', blank=True, null=True)
 
     def __str__(self):
         return f'{self.record_time}-{self.value}'
 
-    def save(self, *args, **kwargs):
-        try:
-            output_water = self.input_output_water.output_water
-            if output_water is not None and output_water != 0:
-                self.time_1 = ((self.value - 5100) * 3) / output_water
-                self.time_2 = ((self.value - 4300) * 3) / output_water
-        except ObjectDoesNotExist:
-            self.time_1 = None
-            self.time_2 = None
-
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     try:
+    #         output_water = self.input_output_water.output_water
+    #         if output_water is not None and output_water != 0:
+    #             self.time_1 = ((self.value - 5100) * 3) / output_water if self.value > 5100 else 0
+    #             self.time_2 = ((self.value - 4300) * 3) / output_water if self.value > 4300 else 0
+    #     except ObjectDoesNotExist:
+    #         self.time_1 = 0
+    #         self.time_2 = 0
+    #
+    #     super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'РПВ-6'
@@ -83,18 +83,18 @@ class RPV7(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создание')
     record_time = models.DateTimeField(verbose_name='Время записи', blank=True, null=True)
     input_output_water = models.ForeignKey(InputOutputWater, on_delete=models.CASCADE, verbose_name='Вход/Выход воды', blank=True, null=True)
-    time_1 = models.FloatField(verbose_name='t1(1.29)', blank=True, null=True)
-    time_2 = models.FloatField(verbose_name='t1(1.09)', blank=True, null=True)
+    # time_1 = models.FloatField(verbose_name='t1(1.29)', blank=True, null=True)
+    # time_2 = models.FloatField(verbose_name='t1(1.09)', blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        try:
-            output_water = self.input_output_water.output_water
-            if output_water is not None and output_water != 0:
-                self.time_1 = ((self.value - 6300) * 3) / output_water
-                self.time_2 = ((self.value - 5300) * 3) / output_water
-        except ObjectDoesNotExist:
-            self.time_1 = None
-            self.time_2 = None
+    # def save(self, *args, **kwargs):
+    #     try:
+    #         output_water = self.input_output_water.output_water
+    #         if output_water is not None and output_water != 0:
+    #             self.time_1 = ((self.value - 6300) * 3) / output_water if self.value > 6300 else 0
+    #             self.time_2 = ((self.value - 5300) * 3) / output_water if self.value > 5300 else 0
+    #     except ObjectDoesNotExist:
+    #         self.time_1 = 0
+    #         self.time_2 = 0
 
     def __str__(self):
         return f'{self.record_time}-{self.value}'

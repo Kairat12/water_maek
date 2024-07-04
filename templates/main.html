@@ -4,6 +4,9 @@
 
     <div class="container mb-5">
         <h3 class="h3 mt-4">Данные на {{ rpv5.record_time|date:"d.m.Y H:s" }}</h3>
+        {% if temperature %}
+            <h3 class="h3 mt-4">Температура воды на {{ temperature.temp }}</h3>
+        {% endif %}
         <div class="top_pipes__blocks">
             <div class="row align-items-end">
                 <div class="col-3 top__pipe">
@@ -13,7 +16,7 @@
                         <div class="rpv__subtitle">
                             ДОП с ЗПД, марка Б
                         </div>
-                        <div class="rpv__subtitle__value">1019.2 м3/ч</div>
+                        <div class="rpv__subtitle__value">{{ dop_input.dop_right }} м3/ч</div>
                     </div>
                     <div class="pipe pipe_height"></div>
                 </div>
@@ -36,7 +39,7 @@
                             <div class="rpv__subtitle">
                                 ДОП с ЗПД, марка А
                             </div>
-                            <div class="rpv__subtitle__value">1019.2 м3/ч</div>
+                            <div class="rpv__subtitle__value">{{ dop_input.dop_left }} м3/ч</div>
                         </div>
                     </div>
                     <div class="pipe pipe_height"></div>
@@ -207,7 +210,8 @@
             <div class="pipe pipe_height" style="height: 150px"></div>
             <div class="d-flex align-items-center">
                 <div class="sppv-75">СППВ-75</div>
-                <div><h5 class="h4 ms-4">Выработка питьевой воды: <b>2093 м3/ч</b></h5></div>
+                <div><h5 class="h4 ms-4">Выработка питьевой воды: <b>{{ input_output_water.input_water }} м3/ч</b></h5>
+                </div>
                 <table class="table  table-bordered border-dark position-absolute end-0 w-25">
                     <thead class="thead-dark">
                     <tr>
@@ -218,36 +222,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>00:00</td>
-                        <td>2090</td>
-                        <td>1897</td>
-                        <td style="background: green; color: #FFFFFF; text-align: center">&#9650;</td>
-                    </tr>
-                    <tr>
-                        <td>02:00</td>
-                        <td>2090</td>
-                        <td>1897</td>
-                        <td style="background: gray; color: #FFFFFF; text-align: center"> &#10040;</td>
-                    </tr>
-                    <tr>
-                        <td>01:00</td>
-                        <td>2090</td>
-                        <td>1897</td>
-                        <td style="background: red; color: #FFFFFF; text-align: center">&#9660;</td>
-                    </tr>
-                    <tr>
-                        <td>03:00</td>
-                        <td>2090</td>
-                        <td>1897</td>
-                        <td style="background: green; color: #FFFFFF; text-align: center">&#9650;</td>
-                    </tr>
-                    <tr class="font-weight-bold">
-                        <td>04:00</td>
-                        <td>2090</td>
-                        <td>1897</td>
-                        <td style="background: green; color: #FFFFFF; text-align: center">&#9650;</td>
-                    </tr>
+                    {% for input_output_water_table in input_output_water_tables %}
+                        <tr>
+                            <td>{{ input_output_water_table.record_time|date:"H:s" }}</td>
+                            <td>{{ input_output_water_table.input_water }}</td>
+                            <td>{{ input_output_water_table.output_water }}</td>
+                            {% if input_output_water_table.input_water > input_output_water_table.output_water %}
+                                <td style="background: green; color: #FFFFFF; text-align: center">&#9650;</td>
+                            {% else %}
+                                <td style="background: red; color: #FFFFFF; text-align: center">▼</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -490,11 +476,11 @@
                                     <div class="rpv__subtitle">
                                         Уровень
                                     </div>
-                                    <div class="rpv__subtitle__value" id="rpv1_value">3.2 м</div>
+                                    <div class="rpv__subtitle__value" id="rpv1_value">{{ rpv1.value }} м</div>
                                     <div class="rpv__subtitle">
                                         Объём
                                     </div>
-                                    <div class="rpv__subtitle__value" id="rpv1_volume">3200 м3</div>
+                                    <div class="rpv__subtitle__value" id="rpv1_volume">{{ rpv1.volume }} м3</div>
                                 </div>
                             </div>
                             <canvas id="rpv-1" width="300" height="400"></canvas>
@@ -515,11 +501,11 @@
                                     <div class="rpv__subtitle">
                                         Уровень
                                     </div>
-                                    <div class="rpv__subtitle__value" id="rpv2_value">3.2 м</div>
+                                    <div class="rpv__subtitle__value" id="rpv2_value">{{ rpv2.value }} м</div>
                                     <div class="rpv__subtitle">
                                         Объём
                                     </div>
-                                    <div class="rpv__subtitle__value" id="rpv2_volume">3200 м3</div>
+                                    <div class="rpv__subtitle__value" id="rpv2_volume">{{ rpv2.volume }} м3</div>
                                 </div>
                             </div>
                             <canvas id="rpv-2" width="300" height="400"></canvas>
@@ -527,7 +513,8 @@
                     </div>
                 </div>
             </div>
-            <div class="h4 mt-3 text-center">Общее потребление питьевой воды: <b>2275 м3/ч </b></div>
+            <div class="h4 mt-3 text-center">Общее потребление питьевой воды: <b>{{ input_output_water.output_water }}
+                м3/ч </b></div>
         {% endif %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -650,6 +637,33 @@
             }
         {% endif %}
 
+        let rpv1_value, rpv1_consumption, rpv1_pressure, rpv1_volume;
+        {% if rpv1.value is None %}
+            rpv1_value = null; // Присваиваем null, если значение None
+        {% else %}
+            rpv1_value = parseFloat('{{ rpv1.value }}'.replace(',', '.'));
+            rpv1_volume = parseFloat('{{ rpv1.volume }}'.replace(',', '.'));
+            let rpv1_value_block = document.getElementById('rpv1_value');
+            let rpv1_volume_block = document.getElementById('rpv1_volume');
+            if (rpv1_value_block && rpv1_volume_block) {
+                rpv1_value_block.textContent = rpv1_value + ' м'
+                rpv1_volume_block.textContent = rpv1_volume * 1000 + ' м3'
+            }
+        {% endif %}
+        let rpv2_value, rpv2_consumption, rpv2_pressure, rpv2_volume;
+        {% if rpv2.value is None %}
+            rpv2_value = null; // Присваиваем null, если значение None
+        {% else %}
+            rpv2_value = parseFloat('{{ rpv2.value }}'.replace(',', '.'));
+            rpv2_volume = parseFloat('{{ rpv2.volume }}'.replace(',', '.'));
+            let rpv2_value_block = document.getElementById('rpv2_value');
+            let rpv2_volume_block = document.getElementById('rpv2_volume');
+            if (rpv2_value_block && rpv2_volume_block) {
+                rpv2_value_block.textContent = rpv2_value + ' м'
+                rpv2_volume_block.textContent = rpv2_volume * 1000 + ' м3'
+            }
+        {% endif %}
+
         createChart(ctx1, 'РПВ-5', rpv5_value, 1.09, 1.29, 4300, 5100);
         createChart(ctx2, 'РПВ-6', rpv6_value, 1.09, 1.29, 4300, 5100);
         createChart(ctx3, 'РПВ-7', rpv7_value, 1.39, 1.59, 5500, 6300);
@@ -657,8 +671,8 @@
         createChart(ctx_rppv2, 'РППВ-2', rppv2_value, 0.5, 0, 2000, 0);
         createChart(ctx_brd3, 'БРД-3', brd3_value, 1.675, 0, 6650, 0);
         createChart(ctx_brd4, 'БРД-4', brd4_value, 1.675, 0, 6650, 0);
-        createChart(ctx_rpv1, 'РПВ-1', rpv5_value, 1.675, 0, 6650, 0);
-        createChart(ctx_rpv2, 'РПВ-2', rpv5_value, 1.675, 0, 6650, 0);
+        createChart(ctx_rpv1, 'РПВ-1', rpv1_value, 1.675, 0, 6650, 0);
+        createChart(ctx_rpv2, 'РПВ-2', rpv2_value, 1.675, 0, 6650, 0);
 
 
         updateTime('rpv5_time_1', 'rpv5_time_2', rpv5_volume, 5100, 4300);

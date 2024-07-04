@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.utils import timezone
 
 from .models import *
 
@@ -12,6 +13,8 @@ from .models import *
 # Create your views here.
 @login_required
 def index(request):
+    today = timezone.now().date()
+
     try:
         rpv5 = RPV5.objects.latest('id')
     except ObjectDoesNotExist:
@@ -44,10 +47,45 @@ def index(request):
         brd4 = BRD4.objects.latest('id')
     except ObjectDoesNotExist:
         brd4 = None
+    try:
+        input_output_water = InputOutputWater.objects.latest('id')
+    except ObjectDoesNotExist:
+        input_output_water = None
+    try:
+        rpv1 = RPV1.objects.latest('id')
+    except ObjectDoesNotExist:
+        rpv1 = None
+    try:
+        rpv2 = RPV2.objects.latest('id')
+    except ObjectDoesNotExist:
+        rpv2 = None
+    try:
+        dgo = DGO.objects.latest('id')
+    except ObjectDoesNotExist:
+        dgo = None
+    try:
+        dop = DOP.objects.latest('id')
+    except ObjectDoesNotExist:
+        dop = None
+    try:
+        temperature = Temperature.objects.latest('id')
+    except ObjectDoesNotExist:
+        temperature = None
+    try:
+        dop_input = DOPInput.objects.latest('id')
+    except ObjectDoesNotExist:
+        dop_input = None
+
+    input_output_water_table = InputOutputWater.objects.filter(record_time__date=today).order_by('-record_time')[:3]
+
     if rpv5 and rpv6 and rpv7 and other_rpv:
         return render(request, 'main.html', {'rpv5': rpv5, 'rpv6': rpv6, 'rpv7': rpv7,
                                              'other_rpv': other_rpv, 'rpvv1': rpvv1, 'rpvv2': rpvv2,
-                                             'brd3': brd3, 'brd4': brd4 })
+                                             'brd3': brd3, 'brd4': brd4, 'input_output_water': input_output_water,
+                                             'rpv1': rpv1, 'rpv2': rpv2, 'dgo': dgo, 'dop': dop,
+                                             'temperature': temperature, 'dop_input': dop_input,
+                                             'input_output_water_tables': input_output_water_table,
+                                             })
     else:
         return render(request, 'main.html')
 
@@ -103,11 +141,12 @@ def upload_data(request):
                     brd_3_level = excel_data.iloc[found_row_1 - 1, 36]
                     brd_3_volume = excel_data.iloc[found_row_1 - 1, 38]
                     brd_4_level = excel_data.iloc[found_row_1 - 1, 40]
+                    brd_4_volume = excel_data.iloc[found_row_1 - 1, 42]
 
                     temperature_val = excel_data.iloc[found_row_1 - 1, 27]
                     if temperature_val:
                         temperature = Temperature.objects.create(
-                            temp=temperature_val,
+                            temp=round(temperature_val, 2),
                             record_time=combined_datetime
                         )
                         temperature.save()
@@ -123,7 +162,7 @@ def upload_data(request):
                     if dop_poliv and dop_tceh_left and dop_tceh_right and dop_tceh and dop_cn and dop_total:
                         dop = DOP.objects.create(
                             poliv=dop_poliv,
-                            tceh=dop_tceh,
+                            dop_ceh_2=dop_tceh,
                             dop_left=dop_tceh_left,
                             dop_right=dop_tceh_right,
                             cn=dop_cn,
@@ -144,11 +183,21 @@ def upload_data(request):
                             tec_2=dgo_tec_2,
                             tes_1=dgo_tes,
                             kaz_azot=dgo_kaz_azot,
-                            total=dgo_total
+                            total=dgo_total,
+                            record_time=combined_datetime
                         )
                         dgo.save()
 
-                    brd_4_volume = excel_data.iloc[found_row_1 - 1, 42]
+                    dop_left = excel_data.iloc[found_row_1 - 1, 24]
+                    dop_right = excel_data.iloc[found_row_1 - 1, 25]
+                    if dop_left and dop_right:
+                        dop_input = DOPInput.objects.create(
+                            dop_left=dop_left,
+                            dop_right=dop_right,
+                            record_time=combined_datetime,
+                        )
+
+
                     if rppv_1_level and rppv_1_volume:
                         rppv_1 = RPPV1.objects.create(level=round(rppv_1_level, 2), volume=round(rppv_1_volume, 2),
                                                    record_time=combined_datetime)
@@ -216,8 +265,8 @@ def upload_data(request):
                     input_water = excel_data.iloc[found_row - 1, 5]
                     input_output_id = None
                     if output_water and input_water:
-                        input_output = InputOutputWater.objects.create(input_water=input_water,
-                                                                       output_water=output_water,
+                        input_output = InputOutputWater.objects.create(input_water=round(input_water,2),
+                                                                       output_water=round(output_water,2),
                                                                        record_time=combined_datetime)
                         input_output_id = input_output.id
                         input_output.save()
@@ -230,18 +279,31 @@ def upload_data(request):
                     volume_for_rpv6 = excel_data.iloc[found_row - 1, 12]
                     value_for_rpv7 = excel_data.iloc[found_row - 1, 14]  # RPV7
                     volume_for_rpv7 = excel_data.iloc[found_row - 1, 16]
+                    value_for_rpv1 = excel_data.iloc[found_row - 1, 18]  # RPV1
+                    volume_for_rpv1 = excel_data.iloc[found_row - 1, 20]
+                    value_for_rpv2 = excel_data.iloc[found_row - 1, 22]  # RPV2
+                    volume_for_rpv2 = excel_data.iloc[found_row - 1, 24]
                     if value_for_rpv5 and volume_for_rpv5:
+                        print("input_output_id", input_output_id)
                         rpv5 = RPV5.objects.create(value=round(value_for_rpv5, 2), volume=round(volume_for_rpv5, 2),
-                                                   record_time=combined_datetime, input_output_water=input_output_id)
+                                                   record_time=combined_datetime, input_output_water_id=input_output_id)
                         rpv5.save()
                     if value_for_rpv6 and volume_for_rpv6:
                         rpv6 = RPV6.objects.create(value=round(value_for_rpv6, 2), volume=round(volume_for_rpv6, 2),
-                                                   record_time=combined_datetime, input_output_water=input_output_id)
+                                                   record_time=combined_datetime, input_output_water_id=input_output_id)
                         rpv6.save()
                     if value_for_rpv7 and volume_for_rpv7:
                         rpv7 = RPV7.objects.create(value=round(value_for_rpv7, 2), volume=round(volume_for_rpv7, 2),
-                                                   record_time=combined_datetime, input_output_water=input_output_id)
+                                                   record_time=combined_datetime, input_output_water_id=input_output_id)
                         rpv7.save()
+                    if value_for_rpv1 and volume_for_rpv1:
+                        rpv1 = RPV1.objects.create(value=round(value_for_rpv1, 2), volume=round(volume_for_rpv1, 2),
+                                                   record_time=combined_datetime)
+                        rpv1.save()
+                    if value_for_rpv2 and volume_for_rpv2:
+                        rpv2 = RPV2.objects.create(value=round(value_for_rpv2, 2), volume=round(volume_for_rpv2, 2),
+                                                   record_time=combined_datetime)
+                        rpv2.save()
 
                     return JsonResponse({'message': 'File and time received successfully!', 'row': found_row})
                 else:
